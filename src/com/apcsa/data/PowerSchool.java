@@ -70,7 +70,7 @@ public class PowerSchool {
 
     public static User login(String username, String password) {
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryUtils.LOGIN_SQL)) {
+        	PreparedStatement stmt = conn.prepareStatement(QueryUtils.LOGIN_SQL)) {
 
             stmt.setString(1, username);
             stmt.setString(2, Utils.getHash(password));
