@@ -8,8 +8,8 @@ public class Administrator extends User {
 
     public Administrator(User user, ResultSet rs) {
 		// TODO Auto-generated constructor stub
-    	public Administrator();
 	}
+    
 	private int administratorId;
     private String firstName;
     private String lastName;
