@@ -5,3 +5,4 @@ data/*.db
 bin/
 src/*.class
 *.class
+/bin1/
