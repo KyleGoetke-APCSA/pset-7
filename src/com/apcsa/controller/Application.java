@@ -11,7 +11,7 @@ public class Application {
 
     public static final int RTCHANGEPWD = 1;    // ROOT - reset user password
     public static final int RTRESETDB = 2;      // ROOT - factory reset database
-    public static final int RTLOGOUT = 3;       // logout
+    public static final int RTLOGOUT = 3;       // ROOT - logout
     public static final int RTSHUTDOWN = 4;     // ROOT - shut down
     public static final int ADBYFAC = 1;        // ADMIN - view faculty
     public static final int ADBYDEP = 2;        // ADMIN - view by department (#22)
@@ -19,17 +19,17 @@ public class Application {
     public static final int ADBYGRADE = 4;      // ADMIN - view by grade
     public static final int ADBYCOURSE = 5;     // ADMIN - view by course
     public static final int ADCHANGEPWD = 6;    // ADMIN - change password
-    public static final int ADLOGOUT = 7;       // logout
+    public static final int ADLOGOUT = 7;       // ADMIN - logout
     public static final int TCBYCOURSE = 1;     // TEACHER - view enrollment by course
     public static final int TCNEWASGN = 2;      // TEACHER - add assignment
     public static final int TCDLTASGN = 3;	    // TEACHER - delete assignment
     public static final int TCNEWGRD = 4;       // TEACHER - enter grade
     public static final int TCCHANGEPWD = 5;	// TEACHER - change password
-    public static final int TCLOGOUT = 6;       // logout
+    public static final int TCLOGOUT = 6;       // TEACHER - logout
     public static final int STVIEWGRD = 1;      // STUDENT - view course grades
     public static final int STBYCOURSE = 2;	    // STUDENT - view assignment grades by course
     public static final int STCHANGEPWD = 3;	// STUDENT - change password
-    public static final int STLOGOUT = 4;       // logout
+    public static final int STLOGOUT = 4;       // STUDENT - logout
 
     /**
      * Creates an instance of the Application class, which is responsible for interacting
@@ -76,20 +76,41 @@ public class Application {
                 } else if (activeUser.isRoot()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
-	                    switch (getSelectionRoot()) {
-		                    case RTCHANGEPWD: System.out.println("\nroot change password\n"); break;
-		                    case RTRESETDB: System.out.println("\nroot reset database\n"); break;
-		                    case RTSHUTDOWN: System.out.println("\nroot shut down\n"); break;
-		                    case LOGOUT: validLogin = false; in.nextLine(); break;
-		                    default: System.out.println("\nInvalid selection.\n"); break;
-	                    }
+                        switch (getSelectionRoot()) {
+                        case RTCHANGEPWD: System.out.println("\nroot change password\n"); break;
+                        case RTRESETDB: System.out.println("\nroot reset database\n"); break;
+                        case RTSHUTDOWN: System.out.println("\nroot shut down\n"); break;
+                        case RTLOGOUT: validLogin = false; in.nextLine(); break;
+                        default: System.out.println("\nInvalid selection.\n"); break;
+                        }
                 	}
                 } else if (activeUser.isAdministrator()) {
-                	// show teacher options
+                	boolean validLogin = true;
+                	while (validLogin) {
+                        switch (getSelectionAdministrator()) {
+                        case ADBYFAC: System.out.println("\nCASE\n"); break;
+                        case ADLOGOUT: validLogin = false; in.nextLine(); break;
+                        default: System.out.println("\nInvalid selection.\n"); break;
+                        }
+                	}
                 } else if (activeUser.isTeacher()) {
-                	// show teacher options
+                	boolean validLogin = true;
+                	while (validLogin) {
+                        switch (getSelectionTeacher()) {
+                        case TCBYCOURSE: System.out.println("\nCASE\n"); break;
+                        case TCLOGOUT: validLogin = false; in.nextLine(); break;
+                        default: System.out.println("\nInvalid selection.\n"); break;
+                        }
+                	}
                 } else if (activeUser.isStudent()) {
-                	// show student options
+                	boolean validLogin = true;
+                	while (validLogin) {
+                        switch (getSelectionStudent()) {
+                        case STVIEWGRD: System.out.println("\nCASE\n"); break;
+                        case STLOGOUT: validLogin = false; in.nextLine(); break;
+                        default: System.out.println("\nInvalid selection.\n"); break;
+                        }
+                	}
                 }
 
                 // create and show the user interface
@@ -110,64 +131,64 @@ public class Application {
      * @return true if the credentials were valid; false otherwise
      */
 
-	public int getSelectionRoot() {
-	    System.out.println("[1] Reset user password.");
-	    System.out.println("[2] Factory reset database.");
-	    System.out.println("[3] Logout");
-	    System.out.println("[4] Shutdown.");
-	
-	    if (in.hasNextInt()) {
-	    	return in.nextInt();
-	    } else {
-	        in.nextLine();
-	        return 6;
-	    }
-	}
-	
-	public int getSelectionAdministrator() {
-	    System.out.println("[1] View balance");
-	    System.out.println("[2] Deposit money");
-	    System.out.println("[3] Withdraw money");
-	    System.out.println("[4] Transfer money");
-	    System.out.println("[5] Logout");
-	
-	    if (in.hasNextInt()) {
-	    	return in.nextInt();
-	    } else {
-	        in.nextLine();
-	        return 6;
-	    }
-	}
-	
-	public int getSelectionTeacher() {
-	    System.out.println("[1] View balance");
-	    System.out.println("[2] Deposit money");
-	    System.out.println("[3] Withdraw money");
-	    System.out.println("[4] Transfer money");
-	    System.out.println("[5] Logout");
-	
-	    if (in.hasNextInt()) {
-	    	return in.nextInt();
-	    } else {
-	        in.nextLine();
-	        return 6;
-	    }
-	}
-	
-	public int getSelectionStudent() {
-	    System.out.println("[1] View balance");
-	    System.out.println("[2] Deposit money");
-	    System.out.println("[3] Withdraw money");
-	    System.out.println("[4] Transfer money");
-	    System.out.println("[5] Logout");
-	
-	    if (in.hasNextInt()) {
-	    	return in.nextInt();
-	    } else {
-	        in.nextLine();
-	        return 6;
-	    }
-	}
+    public int getSelectionRoot() {
+        System.out.println("[1] Reset user password.");
+        System.out.println("[2] Factory reset database.");
+        System.out.println("[3] Logout");
+        System.out.println("[4] Shutdown.");
+
+        if (in.hasNextInt()) {
+        	return in.nextInt();
+        } else {
+            in.nextLine();
+            return 6;
+        }
+    }
+
+    public int getSelectionAdministrator() {
+        System.out.println("[1] View balance");
+        System.out.println("[2] Deposit money");
+        System.out.println("[3] Withdraw money");
+        System.out.println("[4] Transfer money");
+        System.out.println("[5] Logout");
+
+        if (in.hasNextInt()) {
+        	return in.nextInt();
+        } else {
+            in.nextLine();
+            return 6;
+        }
+    }
+
+    public int getSelectionTeacher() {
+        System.out.println("[1] View balance");
+        System.out.println("[2] Deposit money");
+        System.out.println("[3] Withdraw money");
+        System.out.println("[4] Transfer money");
+        System.out.println("[5] Logout");
+
+        if (in.hasNextInt()) {
+        	return in.nextInt();
+        } else {
+            in.nextLine();
+            return 6;
+        }
+    }
+
+    public int getSelectionStudent() {
+        System.out.println("[1] View balance");
+        System.out.println("[2] Deposit money");
+        System.out.println("[3] Withdraw money");
+        System.out.println("[4] Transfer money");
+        System.out.println("[5] Logout");
+
+        if (in.hasNextInt()) {
+        	return in.nextInt();
+        } else {
+            in.nextLine();
+            return 6;
+        }
+    }
 
     public boolean login(String username, String password) {
         activeUser = PowerSchool.login(username, password);
