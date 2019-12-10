@@ -78,7 +78,7 @@ public class Application {
                 	while (validLogin) {
                         switch (getSelectionRoot()) {
                         case RTCHANGEPWD: System.out.println("\nroot change password\n"); break;
-                        case RTRESETDB: System.out.println("\nroot reset database\n"); break;
+                        case RTRESETDB: PowerSchool.reset(); System.out.println("\nroot reset database\n"); break;
                         case RTSHUTDOWN: System.out.println("\nroot shut down\n"); break;
                         case RTLOGOUT: validLogin = false; in.nextLine(); break;
                         default: System.out.println("\nInvalid selection.\n"); break;
