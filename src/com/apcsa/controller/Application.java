@@ -9,6 +9,25 @@ public class Application {
     private Scanner in;
     private User activeUser;
 
+    public static final int rtChangePwd= 1;     // ROOT - reset user password
+    public static final int rtResetDB = 2;      // ROOT - factory reset database
+    public static final int rtshutDown = 3;     // ROOT - shut down
+    public static final int adByFac = 4;        // ADMIN - view faculty
+    public static final int adByDep = 5;        // ADMIN - view by department (#22)
+    public static final int adByEnroll = 6;     // ADMIN - view student enrollment
+    public static final int adByGrade = 7;      // ADMIN - view by grade
+    public static final int adByCourse = 8;     // ADMIN - view by course
+    public static final int adChangePwd = 9;    // ADMIN - change password
+    public static final int tcbyCourse = 10;    // TEACHER - view enrollment by course
+    public static final int tcNewAsgn = 11;     // TEACHER - add assignment
+    public static final int tcDltAsgn = 12;	    // TEACHER - delete assignment
+    public static final int tcNewGrd = 13;      // TEACHER - enter grade
+    public static final int tcChangePwd = 14;	// TEACHER - change password
+    public static final int stViewGrd = 15;     // STUDENT - view course grades
+    public static final int stByCourse = 16;	// STUDENT - view assignment grades by course
+    public static final int stChangePwd = 17;	// STUDENT - change password
+    public static final int logout = 18;        // logout
+
     /**
      * Creates an instance of the Application class, which is responsible for interacting
      * with the user via the command line interface.
@@ -51,6 +70,23 @@ public class Application {
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     // first-time users need to change their passwords from the default provided
+                } else if (activeUser.isRoot()) {
+                	// while (validLogin) {
+                    switch (getSelection()) {
+                    case VIEW: showBalance(); break;
+                    case DEPOSIT: deposit(); break;
+                    case WITHDRAW: withdraw(); break;
+                    case TRANSFER: transfer(); break;
+                    case LOGOUT: bank.update(activeAccount); bank.save(); validLogin = false; in.nextLine(); break;
+                    default: System.out.println("\nInvalid selection.\n"); break;
+                }
+            }
+                } else if (activeUser.isAdministrator()) {
+                	// show teacher options
+                } else if (activeUser.isTeacher()) {
+                	// show teacher options
+                } else if (activeUser.isStudent()) {
+                	// show student options
                 }
 
                 // create and show the user interface
