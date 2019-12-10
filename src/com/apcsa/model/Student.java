@@ -13,7 +13,7 @@ public class Student extends User {
     private double gpa;
     private String firstName;
     private String lastName;
-    
+
     public Student(User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
