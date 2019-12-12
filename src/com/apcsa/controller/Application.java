@@ -77,49 +77,49 @@ public class Application {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionRoot()) {
-                            case RTCHANGEPWD: System.out.println("\nroot change password\n"); break;
-                            case RTRESETDB: /*PowerSchool.reset();*/ System.out.println("\nroot reset database\n"); break;
+                            case RTCHANGEPWD: System.out.print("\nroot change password\n"); break;
+                            case RTRESETDB: System.out.print("\nroot reset database\n"); /*PowerSchool.reset();*/ break;
                             case RTSHUTDOWN: rootShutdown(); break;
                             case RTLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-                            default: System.out.println("\nInvalid selection.\n"); break;
+                            default: System.out.print("\nInvalid selection.\n"); break;
                         }
                 	}
                 } else if (activeUser.isAdministrator()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionAdministrator()) {
-                            case ADBYFAC: System.out.println("\nview by faculty\n"); break;
-                            case ADBYDEP: System.out.println("\nview by dept\n"); break;
-                            case ADBYENROLL: System.out.println("\nview enrollment\n"); break;
-                            case ADBYGRADE: System.out.println("\nview by grade\n"); break;
-                            case ADBYCOURSE: System.out.println("\nview by course\n"); break;
-                            case ADCHANGEPWD: System.out.println("\nadmin change password\n"); break;
+                            case ADBYFAC: System.out.print("\nview by faculty\n"); break;
+                            case ADBYDEP: System.out.print("\nview by dept\n"); break;
+                            case ADBYENROLL: System.out.print("\nview enrollment\n"); break;
+                            case ADBYGRADE: System.out.print("\nview by grade\n"); break;
+                            case ADBYCOURSE: System.out.print("\nview by course\n"); break;
+                            case ADCHANGEPWD: System.out.print("\nadmin change password\n"); break;
                             case ADLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-                            default: System.out.println("\nInvalid selection.\n"); break;
+                            default: System.out.print("\nInvalid selection.\n"); break;
                         }
                 	}
                 } else if (activeUser.isTeacher()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionTeacher()) {
-                            case TCBYCOURSE: System.out.println("\nview enrollment by course\n"); break;
-                            case TCNEWASGN: System.out.println("\nadd assignment\n"); break;
-                            case TCDLTASGN: System.out.println("\ndelete assignment\n"); break;
-                            case TCNEWGRD: System.out.println("\nenter grade\n"); break;
-                            case TCCHANGEPWD: System.out.println("\nteacher change password\n"); break;
+                            case TCBYCOURSE: System.out.print("\nview enrollment by course\n"); break;
+                            case TCNEWASGN: System.out.print("\nadd assignment\n"); break;
+                            case TCDLTASGN: System.out.print("\ndelete assignment\n"); break;
+                            case TCNEWGRD: System.out.print("\nenter grade\n"); break;
+                            case TCCHANGEPWD: System.out.print("\nteacher change password\n"); break;
                             case TCLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-                            default: System.out.println("\nInvalid selection.\n"); break;
+                            default: System.out.print("\nInvalid selection.\n"); break;
                         }
                 	}
                 } else if (activeUser.isStudent()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionStudent()) {
-                            case STVIEWGRD: System.out.println("\nview course grades\n"); break;
-                            case STBYCOURSE: System.out.println("\nview asgn grades by course\n"); break;
-                            case STCHANGEPWD: System.out.println("\nstudent change password\n"); break;
+                            case STVIEWGRD: System.out.print("\nview course grades\n"); break;
+                            case STBYCOURSE: System.out.print("\nview asgn grades by course\n"); break;
+                            case STCHANGEPWD: System.out.print("\nstudent change password\n"); break;
                             case STLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-                            default: System.out.println("\nInvalid selection.\n"); break;
+                            default: System.out.print("\nInvalid selection.\n"); break;
                         }
                 	}
                 }
@@ -173,7 +173,7 @@ public class Application {
             rootDecision = in.nextInt();
             return rootDecision;
         } else {
-            in.nextLine();
+            in.next();
             return 10;
         }
     }
@@ -195,7 +195,7 @@ public class Application {
             adminDecision = in.nextInt();
             return adminDecision;
         } else {
-            in.nextLine();
+            in.next();
             return 10;
         }
     }
@@ -216,7 +216,7 @@ public class Application {
             teacherDecision = in.nextInt();
             return teacherDecision;
         } else {
-            in.nextLine();
+            in.next();
             return 10;
         }
     }
@@ -235,7 +235,7 @@ public class Application {
             studentDecision = in.nextInt();
             return studentDecision;
         } else {
-            in.nextLine();
+            in.next();
             return 10;
         }
     }
