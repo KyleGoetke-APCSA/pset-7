@@ -77,49 +77,49 @@ public class Application {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionRoot()) {
-	                        case RTCHANGEPWD: System.out.println("\nroot change password\n"); break;
-	                        case RTRESETDB: /*PowerSchool.reset();*/ System.out.println("\nroot reset database\n"); break;
-	                        case RTSHUTDOWN: rootShutdown(); break;
-	                        case RTLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-	                        default: System.out.println("\nInvalid selection.\n"); break;
+                            case RTCHANGEPWD: System.out.println("\nroot change password\n"); break;
+                            case RTRESETDB: /*PowerSchool.reset();*/ System.out.println("\nroot reset database\n"); break;
+                            case RTSHUTDOWN: rootShutdown(); break;
+                            case RTLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
+                            default: System.out.println("\nInvalid selection.\n"); break;
                         }
                 	}
                 } else if (activeUser.isAdministrator()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionAdministrator()) {
-	                        case ADBYFAC: System.out.println("\nview by faculty\n"); break;
-	                        case ADBYDEP: System.out.println("\nview by dept\n"); break;
-	                        case ADBYENROLL: System.out.println("\nview enrollment\n"); break;
-	                        case ADBYGRADE: System.out.println("\nview by grade\n"); break;
-	                        case ADBYCOURSE: System.out.println("\nview by course\n"); break;
-	                        case ADCHANGEPWD: System.out.println("\nadmin change password\n"); break;
-	                        case ADLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-	                        default: System.out.println("\nInvalid selection.\n"); break;
+                            case ADBYFAC: System.out.println("\nview by faculty\n"); break;
+                            case ADBYDEP: System.out.println("\nview by dept\n"); break;
+                            case ADBYENROLL: System.out.println("\nview enrollment\n"); break;
+                            case ADBYGRADE: System.out.println("\nview by grade\n"); break;
+                            case ADBYCOURSE: System.out.println("\nview by course\n"); break;
+                            case ADCHANGEPWD: System.out.println("\nadmin change password\n"); break;
+                            case ADLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
+                            default: System.out.println("\nInvalid selection.\n"); break;
                         }
                 	}
                 } else if (activeUser.isTeacher()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionTeacher()) {
-	                        case TCBYCOURSE: System.out.println("\nview enrollment by course\n"); break;
-	                        case TCNEWASGN: System.out.println("\nadd assignment\n"); break;
-	                        case TCDLTASGN: System.out.println("\ndelete assignment\n"); break;
-	                        case TCNEWGRD: System.out.println("\nenter grade\n"); break;
-	                        case TCCHANGEPWD: System.out.println("\nteacher change password\n"); break;
-	                        case TCLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-	                        default: System.out.println("\nInvalid selection.\n"); break;
+                            case TCBYCOURSE: System.out.println("\nview enrollment by course\n"); break;
+                            case TCNEWASGN: System.out.println("\nadd assignment\n"); break;
+                            case TCDLTASGN: System.out.println("\ndelete assignment\n"); break;
+                            case TCNEWGRD: System.out.println("\nenter grade\n"); break;
+                            case TCCHANGEPWD: System.out.println("\nteacher change password\n"); break;
+                            case TCLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
+                            default: System.out.println("\nInvalid selection.\n"); break;
                         }
                 	}
                 } else if (activeUser.isStudent()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionStudent()) {
-	                        case STVIEWGRD: System.out.println("\nview course grades\n"); break;
-	                        case STBYCOURSE: System.out.println("\nview asgn grades by course\n"); break;
-	                        case STCHANGEPWD: System.out.println("\nstudent change password\n"); break;
-	                        case STLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-	                        default: System.out.println("\nInvalid selection.\n"); break;
+                            case STVIEWGRD: System.out.println("\nview course grades\n"); break;
+                            case STBYCOURSE: System.out.println("\nview asgn grades by course\n"); break;
+                            case STCHANGEPWD: System.out.println("\nstudent change password\n"); break;
+                            case STLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
+                            default: System.out.println("\nInvalid selection.\n"); break;
                         }
                 	}
                 }
@@ -148,7 +148,7 @@ public class Application {
             System.exit(0);
     	}
     }
-    
+
     public boolean logoutConfirm() {
         System.out.print("\nAre you sure you want to logout? (y/n) ");
     	String logoutDecision = in.next();
@@ -158,7 +158,7 @@ public class Application {
     		return true;
     	}
     }
-    
+
     public int getSelectionRoot() {
         int rootDecision;
     	System.out.println("\nHello again, ROOT!\n");
@@ -180,7 +180,8 @@ public class Application {
 
     public int getSelectionAdministrator() {
         int adminDecision;
-    	System.out.println("\nHello again, [USER FIRST NAME]!\n");
+        String firstName = activeUser.getFirstName();
+    	System.out.printf("\nHello again, %s!\n", firstName);
     	System.out.println("[1] View faculty.");
         System.out.println("[2] View faculty by department.");
         System.out.println("[3] View student enrollment.");
@@ -201,7 +202,8 @@ public class Application {
 
     public int getSelectionTeacher() {
     	int teacherDecision;
-        System.out.print("\n");
+        String firstName = activeUser.getFirstName();
+    	System.out.printf("\nHello again, %s!\n", firstName);
         System.out.println("[1] View enrollment by course.");
         System.out.println("[2] Add assignment.");
         System.out.println("[3] Delete assignment.");
@@ -221,7 +223,8 @@ public class Application {
 
     public int getSelectionStudent() {
     	int studentDecision;
-        System.out.print("\n");
+        String firstName = activeUser.getFirstName();
+    	System.out.printf("\nHello again, %s!\n", firstName);
         System.out.println("[1] View course grades.");
         System.out.println("[2] View assignment grades by course.");
         System.out.println("[3] Change password.");
