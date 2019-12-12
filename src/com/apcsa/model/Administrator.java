@@ -6,7 +6,7 @@ import com.apcsa.model.User;
 
 public class Administrator extends User {
 
-	private int administratorId;
+    private int administratorId;
     private String firstName;
     private String lastName;
     private String jobTitle;
@@ -18,6 +18,10 @@ public class Administrator extends User {
         this.firstName = rs.getString("first_name");
         this.lastName = rs.getString("last_name");
         this.jobTitle = rs.getString("job_title");
+    }
+
+    public String getFirstName() {
+        return this.firstName;
     }
 
 }
