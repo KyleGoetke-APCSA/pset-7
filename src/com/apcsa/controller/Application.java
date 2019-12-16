@@ -1,5 +1,7 @@
 package com.apcsa.controller;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Scanner;
 import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
@@ -80,8 +82,26 @@ public class Application {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionRoot()) {
-                            case RTCHANGEPWD: System.out.print("\nroot change password\n"); break;
-                            case RTRESETDB: System.out.print("\nroot reset database\n"); PowerSchool.reset(); break;
+                            case RTCHANGEPWD:
+                            	System.out.print("\nUsername: ");
+                                String givenUsername = in.next();
+                                System.out.printf("\nAre you sure you want to reset the password for %s? (y/n) ", givenUsername);
+                                String decision = in.next();
+                                if (decision.equals("y")) {
+                                	PowerSchool.changePassword(givenUsername, givenUsername);
+                                	System.out.printf("\nSuccessfully reset password for %s.", givenUsername);
+                                	Timestamp ts = java.sql.Timestamp.valueOf("0000-00-00 00:00:00.000");
+                                	PowerSchool.resetTimestamp(givenUsername);
+                            	}
+                                break;
+                            case RTRESETDB:
+                                System.out.print("\nAre you sure you want to reset all settings and data? (y/n) ");
+                                String resetDecision = in.next();
+                                if (resetDecision.equals("y")) {
+                                	PowerSchool.reset();
+                                	System.out.println("\nSuccessfully reset database.\n");
+                            	}
+                                break;
                             case RTSHUTDOWN: rootShutdown(); break;
                             case RTLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
                             default: System.out.print("\nInvalid selection.\n"); break;
@@ -161,7 +181,7 @@ public class Application {
     		return true;
     	}
     }
-
+    
     public int getSelectionRoot() {
         int rootDecision;
     	System.out.println("\nHello again, ROOT!\n");

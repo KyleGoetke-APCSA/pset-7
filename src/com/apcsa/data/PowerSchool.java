@@ -104,6 +104,36 @@ public class PowerSchool {
     		e.printStackTrace();
     	}
     }
+    
+    public static int resetTimestamp(String username) {
+    	try (Connection conn = getConnection()) {
+	    	try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_LAST_LOGIN_SQL)) {
+	    		String timestampString = "0000-00-00 00:00:00.000"; 	
+	    		Timestamp ts = new Timestamp(timestampString.getTime());
+	    		// https://stackoverflow.com/questions/18915075/java-convert-string-to-timestamp
+	            conn.setAutoCommit(false);
+	            stmt.setString(1, "0000-00-00 00:00:00.000");
+	            stmt.setString(2, username);
+	
+	            if (stmt.executeUpdate() == 1) {
+	                conn.commit();
+	
+	                return 1;
+	            } else {
+	                conn.rollback();
+	
+	                return -1;
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	
+	            return -1;
+	        }
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    		return -1;
+    	}
+    }
 
     /**
      * Returns the administrator account associated with the user.
