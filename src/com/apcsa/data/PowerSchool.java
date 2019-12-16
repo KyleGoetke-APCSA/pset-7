@@ -93,6 +93,17 @@ public class PowerSchool {
 
         return null;
     }
+    
+    public static void changePassword(String username, String password) {
+    	try (Connection conn = getConnection()) {
+    		int isChanged = updatePassword(conn, username, Utils.getHash(password));
+    		if (isChanged != 1) {
+    			System.err.println("Unable to successfully create password.");
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    }
 
     /**
      * Returns the administrator account associated with the user.
@@ -211,13 +222,32 @@ public class PowerSchool {
             return -1;
         }
     }
+    
+    private static int updatePassword(Connection conn, String username, String password) {
+    	try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_PASSWORD_SQL)) {
+    		conn.setAutoCommit(false);
+    		stmt.setString(1, password);
+    		stmt.setString(2, username);
+    		if (stmt.executeUpdate() == 1) {
+    			conn.commit();
+    			return 1;
+    		} else {
+    			conn.rollback();
+    			return -1;
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    		return -1;
+    	}
+    }
+    
 
     /*
      * Builds the database. Executes a SQL script from a configuration file to
      * create the tables, setup the primary and foreign keys, and load sample data.
      */
 
-    private static void reset() {
+    public static void reset() {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              BufferedReader br = new BufferedReader(new FileReader(new File("config/setup.sql")))) {

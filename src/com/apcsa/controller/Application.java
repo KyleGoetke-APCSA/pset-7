@@ -73,12 +73,15 @@ public class Application {
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     // first-time users need to change their passwords from the default provided
+                	System.out.print("\nEnter new password: ");
+                    String newPassword = in.next();
+                    PowerSchool.changePassword(username, newPassword);
                 } else if (activeUser.isRoot()) {
                 	boolean validLogin = true;
                 	while (validLogin) {
                         switch (getSelectionRoot()) {
                             case RTCHANGEPWD: System.out.print("\nroot change password\n"); break;
-                            case RTRESETDB: System.out.print("\nroot reset database\n"); /*PowerSchool.reset();*/ break;
+                            case RTRESETDB: System.out.print("\nroot reset database\n"); PowerSchool.reset(); break;
                             case RTSHUTDOWN: rootShutdown(); break;
                             case RTLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
                             default: System.out.print("\nInvalid selection.\n"); break;
@@ -181,7 +184,7 @@ public class Application {
     public int getSelectionAdministrator() {
         int adminDecision;
         String firstName = activeUser.getFirstName();
-    	System.out.printf("\nHello again, %s!\n", firstName);
+    	System.out.printf("\nHello again, %s!\n\n", firstName);
     	System.out.println("[1] View faculty.");
         System.out.println("[2] View faculty by department.");
         System.out.println("[3] View student enrollment.");
@@ -203,7 +206,7 @@ public class Application {
     public int getSelectionTeacher() {
     	int teacherDecision;
         String firstName = activeUser.getFirstName();
-    	System.out.printf("\nHello again, %s!\n", firstName);
+    	System.out.printf("\nHello again, %s!\n\n", firstName);
         System.out.println("[1] View enrollment by course.");
         System.out.println("[2] Add assignment.");
         System.out.println("[3] Delete assignment.");
@@ -224,7 +227,7 @@ public class Application {
     public int getSelectionStudent() {
     	int studentDecision;
         String firstName = activeUser.getFirstName();
-    	System.out.printf("\nHello again, %s!\n", firstName);
+    	System.out.printf("\nHello again, %s!\n\n", firstName);
         System.out.println("[1] View course grades.");
         System.out.println("[2] View assignment grades by course.");
         System.out.println("[3] Change password.");
