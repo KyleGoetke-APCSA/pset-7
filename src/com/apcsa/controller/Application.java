@@ -90,9 +90,7 @@ public class Application {
                                 String decision = in.next();
                                 if (decision.equals("y")) {
                                 	PowerSchool.changePassword(givenUsername, givenUsername);
-                                	System.out.printf("\nSuccessfully reset password for %s.", givenUsername);
-                                	Timestamp ts = java.sql.Timestamp.valueOf("0000-00-00 00:00:00.000");
-                                	PowerSchool.resetTimestamp(givenUsername);
+                                	System.out.printf("\nSuccessfully reset password for %s.\n", givenUsername);
                             	}
                                 break;
                             case RTRESETDB:
