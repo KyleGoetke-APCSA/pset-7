@@ -197,7 +197,7 @@ public class Application {
         System.out.print("Enter new password: ");
         String newPassword = in.next();
         if (Utils.getHash(oldPassword).equals(activeUser.getPassword())) {
-        	PowerSchool.changePassword(activeUser.getUsername(), newPassword);
+        	PowerSchool.changePassword(activeUser.getUsername(), Utils.getHash(newPassword));
         	System.out.println("\nSuccessfully changed password.");
     	} else if (!(oldPassword.equals(activeUser.getPassword()))) {
     		System.out.println("\nInvalid current password.");
