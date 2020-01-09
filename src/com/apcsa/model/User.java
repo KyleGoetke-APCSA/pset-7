@@ -34,7 +34,7 @@ public class User {
              user.getLastLogin()
         );
     }
-    
+
     /**
      * Creates an instance of the User class.
      *

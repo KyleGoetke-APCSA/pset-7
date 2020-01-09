@@ -14,7 +14,7 @@ public class Teacher extends User {
 
     public Teacher(ResultSet rs) throws SQLException {
         super(-1, "teacher", null, null, null);
-        
+
         this.teacherId = rs.getInt("teacher_id");
         this.departmentId = rs.getInt("department_id");
         this.firstName = rs.getString("first_name");
@@ -22,15 +22,15 @@ public class Teacher extends User {
         this.departmentName = rs.getString("title");
         this.departmentId = rs.getInt("department_id");
     }
-    
+
     public String getName() {
         return lastName + ", " + firstName;
     }
-    
+
     public String getDepartmentName() {
         return departmentName;
     }
-    
+
     public Teacher(User user, ResultSet rs) throws SQLException {
         super(user);
 
