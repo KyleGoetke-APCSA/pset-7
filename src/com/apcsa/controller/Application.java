@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import com.apcsa.data.PowerSchool;
+import com.apcsa.model.Student;
 import com.apcsa.model.Teacher;
 import com.apcsa.model.User;
 
@@ -115,7 +116,7 @@ public class Application {
                         System.out.printf("\nHello again, %s!\n\n", firstName);
                         switch (getSelectionAdministrator()) {
                             case ADBYFAC: viewFaculty(); break;
-                            case ADBYDEP: System.out.print("\nview by dept\n"); break;
+                            case ADBYDEP: viewDepartments(); break;
                             case ADBYENROLL: System.out.print("\nview enrollment\n"); break;
                             case ADBYGRADE: System.out.print("\nview by grade\n"); break;
                             case ADBYCOURSE: System.out.print("\nview by course\n"); break;
@@ -216,21 +217,54 @@ public class Application {
         }
     }
 
-    private void viewFaculty() {        
+    private void viewFaculty() {
         ArrayList<Teacher> teachers = PowerSchool.getTeachers();
-        
+
         if (teachers.isEmpty()) {
             System.out.println("\nNo teachers to display.");
         } else {
             System.out.println();
-            
+
             int i = 1;
             for (Teacher teacher : teachers) {
                 System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
-            } 
+            }
+        }
+    }
+
+    private void viewDepartments() {
+        ArrayList<Teacher> teachers = PowerSchool.getTeachers();
+
+        System.out.println();
+
+        int i = 1;
+        for (Teacher teacher : teachers) {
+            System.out.println("[" + i++ + "] " + teacher.getDepartmentName());
+        }
+        int decision;
+        System.out.print(":::");
+        if (in.hasNextInt()) {
+            decision = in.nextInt();
+        } else {
+        	System.out.print("Not a valid selection.");
         }
     }
     
+    private void viewStudents() {
+        ArrayList<Student> students = PowerSchool.getStudents();
+
+        if (students.isEmpty()) {
+            System.out.println("\nNo students to display.");
+        } else {
+            System.out.println();
+
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName());
+            }
+        }
+    }
+
     public int getSelectionRoot() {
         int rootDecision;
         System.out.println("[1] Reset user password.");

@@ -71,7 +71,7 @@ public class PowerSchool {
 
     public static User login(String username, String password) {
         try (Connection conn = getConnection();
-        	PreparedStatement stmt = conn.prepareStatement(QueryUtils.LOGIN_SQL)) {
+            PreparedStatement stmt = conn.prepareStatement(QueryUtils.LOGIN_SQL)) {
 
             stmt.setString(1, username);
             stmt.setString(2, Utils.getHash(password));
@@ -96,42 +96,42 @@ public class PowerSchool {
     }
 
     public static void changePassword(String username, String password) {
-    	try (Connection conn = getConnection()) {
-    		int isChanged = updatePassword(conn, username, Utils.getHash(password));
-    		if (isChanged != 1) {
-    			System.err.println("Unable to successfully create password.");
-    		}
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    	}
+        try (Connection conn = getConnection()) {
+            int isChanged = updatePassword(conn, username, Utils.getHash(password));
+            if (isChanged != 1) {
+                System.err.println("Unable to successfully create password.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static int resetTimestamp(String username) {
-    	try (Connection conn = getConnection()) {
-	    	try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_LAST_LOGIN_SQL)) {
-	    		// https://stackoverflow.com/questions/18915075/java-convert-string-to-timestamp
-	            conn.setAutoCommit(false);
-	            stmt.setString(1, "0000-00-00 00:00:00.000");
-	            stmt.setString(2, username);
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_LAST_LOGIN_SQL)) {
+                // https://stackoverflow.com/questions/18915075/java-convert-string-to-timestamp
+                conn.setAutoCommit(false);
+                stmt.setString(1, "0000-00-00 00:00:00.000");
+                stmt.setString(2, username);
 
-	            if (stmt.executeUpdate() == 1) {
-	                conn.commit();
+                if (stmt.executeUpdate() == 1) {
+                    conn.commit();
 
-	                return 1;
-	            } else {
-	                conn.rollback();
+                    return 1;
+                } else {
+                    conn.rollback();
 
-	                return -1;
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
+                    return -1;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
 
-	            return -1;
-	        }
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    		return -1;
-    	}
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     /**
@@ -208,6 +208,42 @@ public class PowerSchool {
         return teachers;
     }
 
+     public static ArrayList<Teacher> getTeachersByDept() {
+         ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+
+         try (Connection conn = getConnection();
+              Statement stmt = conn.createStatement()) {
+
+             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ALL_TEACHERS_BY_DEPT_SQL)) {
+                 while (rs.next()) {
+                     teachers.add(new Teacher(rs));
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+         return teachers;
+     }
+     
+     public static ArrayList<Student> getStudents() {
+         ArrayList<Student> students = new ArrayList<Student>();
+
+         try (Connection conn = getConnection();
+              Statement stmt = conn.createStatement()) {
+
+             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ALL_STUDENTS_SQL)) {
+                 while (rs.next()) {
+                	 students.add(new Student(rs));
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+         return students;
+     }
+
     /**
      * Returns the student account associated with the user.
      *
@@ -223,7 +259,7 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Student(user, rs);
+                    return new Student(rs);
                 }
             }
         } catch (SQLException e) {
@@ -277,21 +313,21 @@ public class PowerSchool {
     }
 
     private static int updatePassword(Connection conn, String username, String password) {
-    	try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_PASSWORD_SQL)) {
-    		conn.setAutoCommit(false);
-    		stmt.setString(1, password);
-    		stmt.setString(2, username);
-    		if (stmt.executeUpdate() == 1) {
-    			conn.commit();
-    			return 1;
-    		} else {
-    			conn.rollback();
-    			return -1;
-    		}
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    		return -1;
-    	}
+        try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_PASSWORD_SQL)) {
+            conn.setAutoCommit(false);
+            stmt.setString(1, password);
+            stmt.setString(2, username);
+            if (stmt.executeUpdate() == 1) {
+                conn.commit();
+                return 1;
+            } else {
+                conn.rollback();
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 
