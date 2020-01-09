@@ -12,7 +12,7 @@ public class Administrator extends User {
     private String jobTitle;
 
     public Administrator(User user, ResultSet rs) throws SQLException {
-        super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
+        super(user);
 
         this.administratorId = rs.getInt("administrator_id");
         this.firstName = rs.getString("first_name");
