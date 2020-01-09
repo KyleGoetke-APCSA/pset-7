@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import com.apcsa.controller.Utils;
 import com.apcsa.model.Administrator;
@@ -93,7 +94,7 @@ public class PowerSchool {
 
         return null;
     }
-    
+
     public static void changePassword(String username, String password) {
     	try (Connection conn = getConnection()) {
     		int isChanged = updatePassword(conn, username, Utils.getHash(password));
@@ -104,7 +105,7 @@ public class PowerSchool {
     		e.printStackTrace();
     	}
     }
-    
+
     public static int resetTimestamp(String username) {
     	try (Connection conn = getConnection()) {
 	    	try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_LAST_LOGIN_SQL)) {
@@ -112,19 +113,19 @@ public class PowerSchool {
 	            conn.setAutoCommit(false);
 	            stmt.setString(1, "0000-00-00 00:00:00.000");
 	            stmt.setString(2, username);
-	
+
 	            if (stmt.executeUpdate() == 1) {
 	                conn.commit();
-	
+
 	                return 1;
 	            } else {
 	                conn.rollback();
-	
+
 	                return -1;
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	
+
 	            return -1;
 	        }
     	} catch (SQLException e) {
@@ -181,6 +182,30 @@ public class PowerSchool {
         }
 
         return user;
+    }
+
+    /**
+     * Retrieves all faculty members.
+     *
+     * @return a list of teachers
+     */
+
+     public static ArrayList<Teacher> getTeachers() {
+        ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ALL_TEACHERS_SQL)) {
+                while (rs.next()) {
+                    teachers.add(new Teacher(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return teachers;
     }
 
     /**
@@ -250,7 +275,7 @@ public class PowerSchool {
             return -1;
         }
     }
-    
+
     private static int updatePassword(Connection conn, String username, String password) {
     	try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_PASSWORD_SQL)) {
     		conn.setAutoCommit(false);
@@ -268,7 +293,7 @@ public class PowerSchool {
     		return -1;
     	}
     }
-    
+
 
     /*
      * Builds the database. Executes a SQL script from a configuration file to

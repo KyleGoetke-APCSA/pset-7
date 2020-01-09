@@ -64,4 +64,16 @@ public class QueryUtils {
     	"SET auth = ? " +
     		"WHERE username = ?";
     
+    /*
+     * Retrieves all teachers.
+     */
+
+    public static final String GET_ALL_TEACHERS_SQL =
+        "SELECT * FROM " +
+            "teachers, departments " +
+        "WHERE " +
+            "teachers.department_id = departments.department_id " +
+        "ORDER BY " +
+            "last_name, first_name";
+    
 }
