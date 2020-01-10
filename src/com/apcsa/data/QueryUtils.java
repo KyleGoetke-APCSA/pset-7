@@ -104,15 +104,16 @@ public class QueryUtils {
         "SELECT * FROM courses " +
         "WHERE course_id = ?";
 
-    public static final String ADD_ASSIGNMENT =
-            "SELECT * FROM courses,  " +
-            "WHERE grade_level = ?" +
-            "";
-
     public static final String UPDATE_AUTH_SQL =
-            "UPDATE users " +
-                "SET auth = ? " +
-            "WHERE username = ?";
+        "UPDATE users " +
+            "SET auth = ? " +
+        "WHERE username = ?";
+    
     public static final String GET_NUMBER_OF_COURSES =
-            "SELECT COUNT(*) FROM courses";
+        "SELECT COUNT(*) FROM courses";
+    
+    public static final String GET_COURSES_FOR_STUDENT =
+        "SELECT * FROM course_grades, courses" +
+    	"WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" + 
+        "ORDER BY course_name";
 }
