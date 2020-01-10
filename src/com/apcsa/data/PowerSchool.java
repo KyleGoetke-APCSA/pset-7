@@ -296,7 +296,7 @@ public class PowerSchool {
      }
 
      public static ArrayList<Student> getStudentsByGrade(int grade) {
-ArrayList<Student> students = new ArrayList<Student>();
+    	 ArrayList<Student> students = new ArrayList<Student>();
 
          try (Connection conn = getConnection();
                  PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_GRADE_SQL)) {
