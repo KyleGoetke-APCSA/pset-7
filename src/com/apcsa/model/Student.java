@@ -16,7 +16,7 @@ public class Student extends User {
 
     public Student(ResultSet rs) throws SQLException {
         super(-1, "student", null, null, null);
-        
+
         this.studentId = rs.getInt("student_id");
         this.classRank = rs.getInt("class_rank");
         this.gradeLevel = rs.getInt("grade_level");
@@ -25,10 +25,10 @@ public class Student extends User {
         this.firstName = rs.getString("first_name");
         this.lastName = rs.getString("last_name");
     }
-    
+
     public Student(User user, ResultSet rs) throws SQLException {
         super(user);
-        
+
         this.studentId = rs.getInt("student_id");
         this.classRank = rs.getInt("class_rank");
         this.gradeLevel = rs.getInt("grade_level");
@@ -41,7 +41,7 @@ public class Student extends User {
     public String getName() {
         return lastName + ", " + firstName;
     }
-    
+
     public String getFirstName() {
         return firstName;
     }

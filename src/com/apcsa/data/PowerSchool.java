@@ -105,18 +105,18 @@ public class PowerSchool {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Resets a user's password.
-     * 
+     *
      * @param username the user's username
      */
-    
+
     public static boolean resetPassword(String username) {
-    	try (Connection conn = getConnection();
+        try (Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
 
-    		conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
             stmt.setString(1, Utils.getHash(username));
             stmt.setString(2, username);
 
@@ -188,9 +188,9 @@ public class PowerSchool {
     }
 
     public static int resetLastLogin(String username) {
-    	try (Connection conn = getConnection();
+        try (Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_LAST_LOGIN_SQL)){
-    	
+
             conn.setAutoCommit(false);
             stmt.setString(1,"0000-00-00 00:00:00.000");
             stmt.setString(2, username);
@@ -210,7 +210,7 @@ public class PowerSchool {
             return -1;
         }
     }
-    
+
     /**
      * Returns the teacher account associated with the user.
      *
@@ -277,7 +277,7 @@ public class PowerSchool {
 
          return teachers;
      }
-     
+
      public static ArrayList<Student> getStudents() {
          ArrayList<Student> students = new ArrayList<Student>();
 
@@ -286,7 +286,7 @@ public class PowerSchool {
 
              try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ALL_STUDENTS_SQL)) {
                  while (rs.next()) {
-                	 students.add(new Student(rs));
+                     students.add(new Student(rs));
                  }
              }
          } catch (SQLException e) {
@@ -311,7 +311,7 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                	return new Student(user, rs);
+                    return new Student(user, rs);
                 }
             }
         } catch (SQLException e) {

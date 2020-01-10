@@ -87,7 +87,7 @@ public class Application {
                         System.out.println("\nHello again, ROOT!\n");
                         switch (getSelectionRoot()) {
                             case RTCHANGEPWD:
-                            	resetPassword();
+                                resetPassword();
                                 System.out.print("\nUsername: ");
                                 String givenUsername = in.next();
                                 System.out.printf("\nAre you sure you want to reset the password for %s? (y/n) ", givenUsername);
@@ -196,7 +196,7 @@ public class Application {
     }
 
     private void resetPassword() {
-    	System.out.print("\nUsername: ");
+        System.out.print("\nUsername: ");
         String username = in.next();
         if (Utils.confirm(in, "\nAre you sure you want to reset the password for " + username + "?  (y/n) ")) {
             if (in != null) {
@@ -209,7 +209,7 @@ public class Application {
             }
         }
     }
-    
+
     public void resetUserPassword() {
         System.out.print("\nEnter current password: ");
         String oldPassword = in.next();
@@ -262,10 +262,10 @@ public class Application {
         if (in.hasNextInt()) {
             decision = in.nextInt();
         } else {
-        	System.out.print("Not a valid selection.");
+            System.out.print("Not a valid selection.");
         }
     }
-    
+
     private void viewStudents() {
         ArrayList<Student> students = PowerSchool.getStudents();
 
