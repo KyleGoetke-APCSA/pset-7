@@ -83,9 +83,12 @@ public class QueryUtils {
         "ORDER BY last_name, first_name";
 
     public static final String GET_STUDENTS_BY_GRADE_SQL =
-        "SELECT * FROM students " +
-        "WHERE grade_level = ?" +
-        "ORDER BY last_name, first_name";
+        "SELECT * FROM " +
+            "students " +
+        "WHERE "+
+            "grade_level = ?" +
+        "ORDER BY " +
+            "last_name, first_name";
 
     public static final String GET_STUDENTS_BY_COURSE_SQL =
         "SELECT * FROM students, courses, course_grades " +
@@ -97,6 +100,10 @@ public class QueryUtils {
         "WHERE teachers.department_id =? AND teachers.department_id = courses.department_id "+
         "ORDER BY courses.course_id";
 
+    public static final String GET_COURSE_NUMBER =
+        "SELECT * FROM courses " +
+        "WHERE course_id = ?";
+
     public static final String ADD_ASSIGNMENT =
             "SELECT * FROM courses,  " +
             "WHERE grade_level = ?" +
@@ -106,4 +113,6 @@ public class QueryUtils {
             "UPDATE users " +
                 "SET auth = ? " +
             "WHERE username = ?";
+    public static final String GET_NUMBER_OF_COURSES =
+            "SELECT COUNT(*) FROM courses";
 }

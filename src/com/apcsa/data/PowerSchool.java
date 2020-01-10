@@ -295,6 +295,42 @@ public class PowerSchool {
          return students;
      }
 
+     public static ArrayList<Student> getStudentsByGrade(int grade) {
+ArrayList<Student> students = new ArrayList<Student>();
+
+         try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_GRADE_SQL)) {
+             stmt.setString(1, String.valueOf(grade));
+             try (ResultSet rs = stmt.executeQuery()) {
+                 while(rs.next()) {
+                     students.add(new Student(rs));
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+         return students;
+     }
+
+     public static ArrayList<Student> getStudentsByCourse(String courseNo) {
+         ArrayList<Student> students = new ArrayList<Student>();
+
+         try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_COURSE_SQL)) {
+             stmt.setString(1, courseNo);
+             try (ResultSet rs = stmt.executeQuery()) {
+                 while(rs.next()) {
+                     students.add(new Student(rs));
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+         return students;
+     }
+
     /**
      * Returns the student account associated with the user.
      *
@@ -418,5 +454,38 @@ public class PowerSchool {
             System.err.println("Error: Unable to execute SQL script from configuration file.");
             e.printStackTrace();
         }
+    }
+
+    public static int getNumberOfCourses() {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_NUMBER_OF_COURSES)) {
+
+               try (ResultSet rs = stmt.executeQuery()) {
+                   if (rs.next()) {
+                       return rs.getInt(1);
+                   }
+               }
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+
+           return 1;
+    }
+
+    public static String getCourseNumber(int i) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_COURSE_NUMBER)) {
+
+                stmt.setString(1, String.valueOf(i));
+               try (ResultSet rs = stmt.executeQuery()) {
+                   if (rs.next()) {
+                       return rs.getString("course_no");
+                   }
+               }
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+
+           return "e";
     }
 }

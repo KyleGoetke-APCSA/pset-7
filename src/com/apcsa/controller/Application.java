@@ -1,5 +1,6 @@
 package com.apcsa.controller;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,6 +82,7 @@ public class Application {
                     System.out.print("\nAs a new user, you must change your password. \n\nEnter your new password: ");
                     String newPassword = in.next();
                     PowerSchool.changePassword(username, newPassword);
+                ////////////////////////////// ROOT ////////////////////////////
                 } else if (activeUser.isRoot()) {
                     boolean validLogin = true;
                     while (validLogin) {
@@ -110,6 +112,7 @@ public class Application {
                             default: System.out.print("\nInvalid selection.\n"); break;
                         }
                     }
+                ////////////////////////////// ADMINISTRATOR ////////////////////////////
                 } else if (activeUser.isAdministrator()) {
                     boolean validLogin = true;
                     while (validLogin) {
@@ -118,9 +121,9 @@ public class Application {
                         switch (getSelectionAdministrator()) {
                             case ADBYFAC: viewFaculty(); break;
                             case ADBYDEP: viewDepartments(); break;
-                            case ADBYENROLL: System.out.print("\nview enrollment\n"); break;
-                            case ADBYGRADE: System.out.print("\nview by grade\n"); break;
-                            case ADBYCOURSE: System.out.print("\nview by course\n"); break;
+                            case ADBYENROLL: viewStudents(); break;
+                            case ADBYGRADE: viewStudentsByGrade(); break;
+                            case ADBYCOURSE: viewStudentsByCourse(); break;
                             case ADCHANGEPWD:
                                 resetUserPassword();
                                 break;
@@ -128,6 +131,7 @@ public class Application {
                             default: System.out.print("\nInvalid selection.\n"); break;
                         }
                     }
+                ////////////////////////////// TEACHER ////////////////////////////
                 } else if (activeUser.isTeacher()) {
                     boolean validLogin = true;
                     while (validLogin) {
@@ -145,6 +149,7 @@ public class Application {
                             default: System.out.print("\nInvalid selection.\n"); break;
                         }
                     }
+                ////////////////////////////// STUDENT ////////////////////////////
                 } else if (activeUser.isStudent()) {
                     boolean validLogin = true;
                     while (validLogin) {
@@ -298,6 +303,107 @@ public class Application {
         }
     }
 
+    private void viewStudentsByGrade() {
+        ArrayList<Student> students = PowerSchool.getStudentsByGrade(getGradeSelection());
+
+        if (students.isEmpty()) {
+            System.out.println("\nNo students to display.");
+        } else {
+            System.out.println();
+
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getClassRank());
+            }
+        }
+    }
+
+    private void viewStudentsByCourse() {
+        String courseNo = "";
+        try {
+        courseNo = getCourseSelection();
+        }catch(SQLException e) {
+
+        }
+        ArrayList<Student> students = PowerSchool.getStudentsByCourse(courseNo);
+
+        if (students.isEmpty()) {
+            System.out.println("\nNo students to display.");
+        } else {
+            System.out.println();
+
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName() + " / " + fixGPA(student));
+            }
+        }
+    }
+
+    /*
+     * Retrieves a user's course selection.
+     *
+     * @return the selected course
+     */
+
+    private String getCourseSelection() throws SQLException {
+        boolean valid = false;
+        String courseNo = null;
+
+        while (!valid) {
+            System.out.print("\nCourse No.: ");
+            courseNo = in.next();
+
+            if (isValidCourse(courseNo)) {
+                valid = true;
+            } else {
+                System.out.println("\nCourse not found.");
+            }
+        }
+
+        return courseNo;
+    }
+
+    private String fixGPA(Student student) {
+        double GPA = student.getGpa();
+        if (GPA == -1) {
+            return "--";
+        } else {
+            return String.valueOf(GPA);
+        }
+    }
+
+    private boolean isValidCourse(String courseId) {
+        boolean validCourse = false;
+        for (int i=1; i <  PowerSchool.getNumberOfCourses(); i++) {
+            if (PowerSchool.getCourseNumber(i).equals(courseId)) {
+                validCourse = true;
+            }
+        }
+        return validCourse;
+    }
+
+    /*
+     * Retrieves a user's grade selection.
+     *
+     * @return the selected grade
+     */
+
+    private int getGradeSelection() {
+        int selection = -1;
+        System.out.println("\nChoose a grade level.");
+
+        while (selection < 1 || selection > 4) {
+            System.out.println("\n[1] Freshman.");
+            System.out.println("[2] Sophomore.");
+            System.out.println("[3] Junior.");
+            System.out.println("[4] Senior.");
+            System.out.print("\n::: ");
+
+            selection = Utils.getInt(in, -1);
+        }
+
+        return selection + 8;   // +8 because you want a value between 9 and 12
+    }
     public int getSelectionRoot() {
         int rootDecision;
         System.out.println("[1] Reset user password.");
