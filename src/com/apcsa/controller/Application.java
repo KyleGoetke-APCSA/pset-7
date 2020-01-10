@@ -242,7 +242,7 @@ public class Application {
             System.out.println("[" + i++ + "] " + teacher.getDepartmentName());
         }
         int decision;
-        System.out.print(":::");
+        System.out.print("\n:::");
         if (in.hasNextInt()) {
             decision = in.nextInt();
         } else {
