@@ -96,4 +96,9 @@ public class QueryUtils {
         "SELECT * FROM courses, teachers " +
         "WHERE teachers.department_id =? AND teachers.department_id = courses.department_id "+
         "ORDER BY courses.course_id";
+	
+	public static final String ADD_ASSIGNMENT =
+		    "SELECT * FROM courses,  " +
+		    "WHERE grade_level = ?" +
+		    "";
 }
