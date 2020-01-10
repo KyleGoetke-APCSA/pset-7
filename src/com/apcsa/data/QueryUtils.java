@@ -101,4 +101,9 @@ public class QueryUtils {
 		    "SELECT * FROM courses,  " +
 		    "WHERE grade_level = ?" +
 		    "";
+	
+	public static final String UPDATE_AUTH_SQL =
+            "UPDATE users " +
+                "SET auth = ? " +
+            "WHERE username = ?";
 }
