@@ -1,9 +1,7 @@
 package com.apcsa.controller;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import com.apcsa.data.PowerSchool;
 import com.apcsa.model.Student;
@@ -15,6 +13,7 @@ public class Application {
 
     private Scanner in;
     private User activeUser;
+    public static boolean running;
 
     public static final int RTCHANGEPWD = 1;    // ROOT - reset user password
     public static final int RTRESETDB = 2;      // ROOT - factory reset database
@@ -101,15 +100,15 @@ public class Application {
                                 }
                                 break;
                             case RTSHUTDOWN:
-                            	rootShutdown();
-                            	break;
+                                rootShutdown();
+                                break;
                             case RTLOGOUT:
-                            	validLogin = logoutConfirm();
-                            	in.nextLine();
-                            	break;
+                                validLogin = logoutConfirm();
+                                in.nextLine();
+                                break;
                             default:
-                            	System.out.print("\nInvalid selection.\n");
-                            	break;
+                                System.out.print("\nInvalid selection.\n");
+                                break;
                         }
                     }
                 ////////////////////////////// ADMINISTRATOR ////////////////////////////
@@ -120,20 +119,20 @@ public class Application {
                         System.out.printf("\nHello again, %s!\n\n", firstName);
                         switch (getSelectionAdministrator()) {
                             case ADBYFAC:
-                            	viewFaculty();
-                            	break;
+                                viewFaculty();
+                                break;
                             case ADBYDEP:
-                            	viewDepartments();
-                            	break;
+                                viewDepartments();
+                                break;
                             case ADBYENROLL:
-                            	viewStudents();
-                            	break;
+                                viewStudents();
+                                break;
                             case ADBYGRADE:
-                            	viewStudentsByGrade();
-                            	break;
+                                viewStudentsByGrade();
+                                break;
                             case ADBYCOURSE:
-                            	viewStudentsByCourse();
-                            	break;
+                                viewStudentsByCourse();
+                                break;
                             case ADCHANGEPWD:
                                 resetUserPassword();
                                 break;
@@ -167,7 +166,7 @@ public class Application {
                         System.out.printf("\nHello again, %s!\n\n", firstName);
                         switch (getSelectionStudent()) {
                             case STVIEWGRD:
-                                System.out.print("\nview course grades\n");
+                                ((Student) activeUser).viewCourseGrades();
                                 break;
                             case STBYCOURSE:
                                 System.out.print("\nview asgn grades by course\n");
@@ -226,24 +225,24 @@ public class Application {
     }
 
     private void changePassword() {
-		System.out.print("\nEnter current password: ");
-		String currentPassword = in.next();
-		System.out.print("Enter a new password: ");
+        System.out.print("\nEnter current password: ");
+        String currentPassword = in.next();
+        System.out.print("Enter a new password: ");
         String newPassword = in.next();
         if(activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
-        	activeUser.setPassword(newPassword);
+            activeUser.setPassword(newPassword);
             String auth = activeUser.getPassword();
-    		try (Connection conn = PowerSchool.getConnection()){
-    			PowerSchool.updateAuth(conn, activeUser.getUsername(), auth);
+            try (Connection conn = PowerSchool.getConnection()){
+                PowerSchool.updateAuth(conn, activeUser.getUsername(), auth);
                 System.out.println("\nYour password has been changed to " + newPassword);
-    		} catch (SQLException e) {
-    			e.printStackTrace();
-    		}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }else {
-        	System.out.println("\nInvalid current password.");
+            System.out.println("\nInvalid current password.");
         }
-	}
-    
+    }
+
     public void resetUserPassword() {
         System.out.print("\nEnter current password: ");
         String oldPassword = in.next();
@@ -267,22 +266,6 @@ public class Application {
         }
     }
 
-    private void viewCourseGrades() {
-        ArrayList<String> courses = PowerSchool.getCourses();
-        ArrayList<String> coursegrades = PowerSchool.getCourseGrades();
-
-        if (courses.isEmpty()) {
-            System.out.println("\nNo teachers to display.");
-        } else {
-            System.out.println();
-
-            int i = 1;
-            for (String course : courses) {
-                System.out.println(i++ + ". " + course.getName() + " / " + coursegrades.getCourseGrade());
-            }
-        }
-    }
-    
     private void viewFaculty() {
         ArrayList<Teacher> teachers = PowerSchool.getTeachers();
 

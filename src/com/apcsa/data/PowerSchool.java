@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import com.apcsa.controller.Application;
 import com.apcsa.controller.Utils;
 import com.apcsa.model.Administrator;
 import com.apcsa.model.Student;
@@ -113,10 +114,10 @@ public class PowerSchool {
      */
 
     public static boolean resetPassword(String username) {
-     	try (Connection conn = getConnection();
+         try (Connection conn = getConnection();
                  PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
 
-     		conn.setAutoCommit(false);
+             conn.setAutoCommit(false);
              stmt.setString(1, Utils.getHash(username));
              stmt.setString(2, username);
 
@@ -296,7 +297,7 @@ public class PowerSchool {
      }
 
      public static ArrayList<Student> getStudentsByGrade(int grade) {
-    	 ArrayList<Student> students = new ArrayList<Student>();
+         ArrayList<Student> students = new ArrayList<Student>();
 
          try (Connection conn = getConnection();
                  PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_GRADE_SQL)) {
@@ -330,7 +331,7 @@ public class PowerSchool {
 
          return students;
      }
-     
+
      public static ArrayList<String> getCourses() {
          ArrayList<String> courses = new ArrayList<String>();
 
@@ -348,7 +349,7 @@ public class PowerSchool {
 
          return courses;
      }
-     
+
      public static int updateAuth(Connection conn, String username, String auth) {
          try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
 
@@ -370,24 +371,6 @@ public class PowerSchool {
 
              return -1;
          }
-     }
-     
-     public static ArrayList<String> getCourseGrades() {
-         ArrayList<String> coursegrades = new ArrayList<String>();
-
-         try (Connection conn = getConnection();
-              Statement stmt = conn.createStatement()) {
-
-             try (ResultSet rs = stmt.executeQuery(QueryUtils.SQLAAAAAAAAA)) {
-                 while (rs.next()) {
-                     coursegrades.add(rs.getString("grade"));
-                 }
-             }
-         } catch (SQLException e) {
-             e.printStackTrace();
-         }
-
-         return coursegrades;
      }
 
     /**
@@ -529,6 +512,14 @@ public class PowerSchool {
            }
 
            return 1;
+    }
+
+    public static void shutdown(boolean error) {
+        if (error) {
+            System.out.println("\nA fatal error has occurred. Shutting down...");
+            Application.running = false;
+            return;
+        }
     }
 
     public static String getCourseNumber(int i) {

@@ -108,17 +108,18 @@ public class QueryUtils {
         "UPDATE users " +
             "SET auth = ? " +
         "WHERE username = ?";
-    
+
     public static final String GET_NUMBER_OF_COURSES =
         "SELECT COUNT(*) FROM courses";
-    
+
     public static final String GET_COURSES_FOR_STUDENT =
-        "SELECT * FROM course_grades, courses" +
-    	"WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" + 
-        "ORDER BY course_name";
-    
-    public static final String GET_COURSE_GRADES_FOR_STUDENT =
-        "SELECT * FROM course_grades, courses" +
-        "WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" + 
-        "ORDER BY course_name";
+            "SELECT * FROM course_grades, courses" +
+            "WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" +
+            "ORDER BY course_name";
+
+    public static final String GET_STUDENT_COURSES_SQL =
+        "SELECT courses.title, grade, courses.course_id, courses.course_no FROM course_grades " +
+        "INNER JOIN courses ON course_grades.course_id = courses.course_id " +
+        "INNER JOIN students ON students.student_id = course_grades.student_id " +
+        "WHERE students.student_id = ?";
 }

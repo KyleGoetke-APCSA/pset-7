@@ -1,7 +1,12 @@
 package com.apcsa.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.apcsa.data.PowerSchool;
+import com.apcsa.data.QueryUtils;
 import com.apcsa.model.User;
 
 public class Student extends User {
@@ -52,6 +57,25 @@ public class Student extends User {
 
     public double getGpa() {
         return gpa;
+    }
+
+    public double getStudentId() {
+        return studentId;
+    }
+
+    public void viewCourseGrades() {
+        System.out.print("\n");
+        try (Connection conn = PowerSchool.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENT_COURSES_SQL);
+            stmt.setInt(1, (int) this.getStudentId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    System.out.println(rs.getString("title") + " / " + rs.getInt("grade"));
+                }
+            }
+        } catch (SQLException e) {
+            PowerSchool.shutdown(true);
+        }
     }
 
 }
