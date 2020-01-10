@@ -260,16 +260,15 @@ public class PowerSchool {
         return teachers;
     }
 
-     public static ArrayList<Teacher> getTeachersByDept() {
+     public static ArrayList<Teacher> getTeachersByDept(int department) {
          ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 
          try (Connection conn = getConnection();
-              Statement stmt = conn.createStatement()) {
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_ALL_TEACHERS_BY_DEPT_SQL)) {
+             stmt.setString(1, String.valueOf(department));
+             try (ResultSet rs = stmt.executeQuery()) {
 
-             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ALL_TEACHERS_BY_DEPT_SQL)) {
-                 while (rs.next()) {
                      teachers.add(new Teacher(rs));
-                 }
              }
          } catch (SQLException e) {
              e.printStackTrace();
