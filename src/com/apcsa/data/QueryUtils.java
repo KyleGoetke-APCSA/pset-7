@@ -124,7 +124,8 @@ public class QueryUtils {
         "WHERE students.student_id = ?";
 
     public static final String GET_COURSE_NUMBERS_FOR_STUDENT =
-            "SELECT * FROM courses, students " +
-            "WHERE courses.student_id = students.student_id AND students.student_id = ?" +
-            "ORDER BY course_id";
+        "SELECT courses.title, grade, courses.course_id, courses.course_no FROM course_grades " +
+        "INNER JOIN courses ON course_grades.course_id = courses.course_id " +
+        "INNER JOIN students ON students.student_id = course_grades.student_id " +
+        "WHERE students.student_id = ?";
 }

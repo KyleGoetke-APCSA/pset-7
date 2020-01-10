@@ -169,7 +169,7 @@ public class Application {
                                 ((Student) activeUser).viewCourseGrades();
                                 break;
                             case STBYCOURSE:
-                                System.out.print("\nview asgn grades by course\n");
+                                ((Student) activeUser).viewAssignmentGradesByCourse(in);
                                 break;
                             case STCHANGEPWD:
                                 resetUserPassword();
