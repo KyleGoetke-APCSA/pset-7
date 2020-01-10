@@ -255,6 +255,21 @@ public class Application {
         }
     }
 
+    private void viewCourseGrades() {
+        ArrayList<Course> teachers = PowerSchool.getTeachers();
+
+        if (courses.isEmpty()) {
+            System.out.println("\nNo teachers to display.");
+        } else {
+            System.out.println();
+
+            int i = 1;
+            for (Course course : courses) {
+                System.out.println(i++ + ". " + course.getName() + " / " + coursegrades.getCourseGrade());
+            }
+        }
+    }
+    
     private void viewFaculty() {
         ArrayList<Teacher> teachers = PowerSchool.getTeachers();
 
