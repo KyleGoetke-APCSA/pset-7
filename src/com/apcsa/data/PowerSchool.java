@@ -259,7 +259,7 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Student(rs);
+                	return new Student(user, rs);
                 }
             }
         } catch (SQLException e) {
