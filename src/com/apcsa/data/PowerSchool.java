@@ -113,26 +113,26 @@ public class PowerSchool {
      */
 
     public static boolean resetPassword(String username) {
-        try (Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
+     	try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
 
-            conn.setAutoCommit(false);
-            stmt.setString(1, Utils.getHash(username));
-            stmt.setString(2, username);
+     		conn.setAutoCommit(false);
+             stmt.setString(1, Utils.getHash(username));
+             stmt.setString(2, username);
 
-            if (stmt.executeUpdate() == 1) {
-                conn.commit();
-                return true;
-            } else {
-                conn.rollback();
-               return false;
+             if (stmt.executeUpdate() == 1) {
+                 conn.commit();
+                 return true;
+             } else {
+                 conn.rollback();
+                return false;
 
+             }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
             }
-           } catch (SQLException e) {
-               e.printStackTrace();
-               return false;
-           }
-    }
+     }
 
     public static int resetTimestamp(String username) {
         try (Connection conn = getConnection()) {
@@ -349,6 +349,29 @@ ArrayList<Student> students = new ArrayList<Student>();
          return courses;
      }
      
+     public static int updateAuth(Connection conn, String username, String auth) {
+         try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
+
+             conn.setAutoCommit(false);
+             stmt.setString(1, auth);
+             stmt.setString(2, username);
+
+             if (stmt.executeUpdate() == 1) {
+                 conn.commit();
+
+                 return 1;
+             } else {
+                 conn.rollback();
+
+                 return -1;
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+
+             return -1;
+         }
+     }
+     
      public static ArrayList<String> getCourseGrades() {
          ArrayList<String> coursegrades = new ArrayList<String>();
 
@@ -399,7 +422,7 @@ ArrayList<Student> students = new ArrayList<Student>();
      * @throws SQLException
      */
 
-    private static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(PROTOCOL + DATABASE_URL);
     }
 

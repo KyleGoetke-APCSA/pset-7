@@ -9,6 +9,7 @@ import com.apcsa.data.PowerSchool;
 import com.apcsa.model.Student;
 import com.apcsa.model.Teacher;
 import com.apcsa.model.User;
+import java.sql.Connection;
 
 public class Application {
 
@@ -90,21 +91,13 @@ public class Application {
                         switch (getSelectionRoot()) {
                             case RTCHANGEPWD:
                                 resetPassword();
-                                System.out.print("\nUsername: ");
-                                String givenUsername = in.next();
-                                System.out.printf("\nAre you sure you want to reset the password for %s? (y/n) ", givenUsername);
-                                String decision = in.next();
-                                if (decision.equals("y")) {
-                                    PowerSchool.changePassword(givenUsername, givenUsername);
-                                    System.out.printf("\nSuccessfully reset password for %s.\n", givenUsername);
-                                }
                                 break;
                             case RTRESETDB:
                                 System.out.print("\nAre you sure you want to reset all settings and data? (y/n) ");
                                 String resetDecision = in.next();
                                 if (resetDecision.equals("y")) {
                                     PowerSchool.reset();
-                                    System.out.println("\nSuccessfully reset database.\n");
+                                    System.out.println("\nSuccessfully reset database.");
                                 }
                                 break;
                             case RTSHUTDOWN:
@@ -222,7 +215,7 @@ public class Application {
         String username = in.next();
         if (Utils.confirm(in, "\nAre you sure you want to reset the password for " + username + "?  (y/n) ")) {
             if (in != null) {
-                if(PowerSchool.resetPassword(username)) {
+                if (PowerSchool.resetPassword(username)) {
                     PowerSchool.resetLastLogin(username);
                     System.out.println("\nSuccessfully reset password for " + username + ".");
                 } else {
@@ -232,6 +225,25 @@ public class Application {
         }
     }
 
+    private void changePassword() {
+		System.out.print("\nEnter current password: ");
+		String currentPassword = in.next();
+		System.out.print("Enter a new password: ");
+        String newPassword = in.next();
+        if(activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
+        	activeUser.setPassword(newPassword);
+            String auth = activeUser.getPassword();
+    		try (Connection conn = PowerSchool.getConnection()){
+    			PowerSchool.updateAuth(conn, activeUser.getUsername(), auth);
+                System.out.println("\nYour password has been changed to " + newPassword);
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+        }else {
+        	System.out.println("\nInvalid current password.");
+        }
+	}
+    
     public void resetUserPassword() {
         System.out.print("\nEnter current password: ");
         String oldPassword = in.next();
