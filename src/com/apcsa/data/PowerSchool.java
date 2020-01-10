@@ -331,15 +331,15 @@ ArrayList<Student> students = new ArrayList<Student>();
          return students;
      }
      
-     public static ArrayList<Course> getCourses() {
-         ArrayList<Course> courses = new ArrayList<Course>();
+     public static ArrayList<String> getCourses() {
+         ArrayList<String> courses = new ArrayList<String>();
 
          try (Connection conn = getConnection();
               Statement stmt = conn.createStatement()) {
 
-             try (ResultSet rs = stmt.executeQuery(QueryUtils.SQLAAAAAAAAA)) {
+             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_FOR_STUDENT)) {
                  while (rs.next()) {
-                     courses.add(new Course(rs));
+                     courses.add(rs.getString("title"));
                  }
              }
          } catch (SQLException e) {
@@ -347,6 +347,24 @@ ArrayList<Student> students = new ArrayList<Student>();
          }
 
          return courses;
+     }
+     
+     public static ArrayList<String> getCourseGrades() {
+         ArrayList<String> coursegrades = new ArrayList<String>();
+
+         try (Connection conn = getConnection();
+              Statement stmt = conn.createStatement()) {
+
+             try (ResultSet rs = stmt.executeQuery(QueryUtils.SQLAAAAAAAAA)) {
+                 while (rs.next()) {
+                     coursegrades.add(rs.getString("grade"));
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+         return coursegrades;
      }
 
     /**

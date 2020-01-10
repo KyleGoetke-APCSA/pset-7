@@ -116,4 +116,9 @@ public class QueryUtils {
         "SELECT * FROM course_grades, courses" +
     	"WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" + 
         "ORDER BY course_name";
+    
+    public static final String GET_COURSE_GRADES_FOR_STUDENT =
+        "SELECT * FROM course_grades, courses" +
+        "WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" + 
+        "ORDER BY course_name";
 }

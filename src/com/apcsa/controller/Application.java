@@ -256,7 +256,8 @@ public class Application {
     }
 
     private void viewCourseGrades() {
-        ArrayList<Course> teachers = PowerSchool.getTeachers();
+        ArrayList<String> courses = PowerSchool.getCourses();
+        ArrayList<String> coursegrades = PowerSchool.getCourseGrades();
 
         if (courses.isEmpty()) {
             System.out.println("\nNo teachers to display.");
@@ -264,7 +265,7 @@ public class Application {
             System.out.println();
 
             int i = 1;
-            for (Course course : courses) {
+            for (String course : courses) {
                 System.out.println(i++ + ". " + course.getName() + " / " + coursegrades.getCourseGrade());
             }
         }
