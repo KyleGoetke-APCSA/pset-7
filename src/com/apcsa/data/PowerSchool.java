@@ -330,6 +330,24 @@ ArrayList<Student> students = new ArrayList<Student>();
 
          return students;
      }
+     
+     public static ArrayList<Course> getCourses() {
+         ArrayList<Course> courses = new ArrayList<Course>();
+
+         try (Connection conn = getConnection();
+              Statement stmt = conn.createStatement()) {
+
+             try (ResultSet rs = stmt.executeQuery(QueryUtils.SQLAAAAAAAAA)) {
+                 while (rs.next()) {
+                     courses.add(new Course(rs));
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+         return courses;
+     }
 
     /**
      * Returns the student account associated with the user.
