@@ -46,4 +46,12 @@ public class Student extends User {
         return firstName;
     }
 
+    public int getClassRank() {
+		return classRank;
+	}
+
+    public double getGpa() {
+		return gpa;
+	}
+
 }
