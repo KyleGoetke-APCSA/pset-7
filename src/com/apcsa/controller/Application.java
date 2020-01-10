@@ -107,9 +107,16 @@ public class Application {
                                     System.out.println("\nSuccessfully reset database.\n");
                                 }
                                 break;
-                            case RTSHUTDOWN: rootShutdown(); break;
-                            case RTLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-                            default: System.out.print("\nInvalid selection.\n"); break;
+                            case RTSHUTDOWN:
+                            	rootShutdown();
+                            	break;
+                            case RTLOGOUT:
+                            	validLogin = logoutConfirm();
+                            	in.nextLine();
+                            	break;
+                            default:
+                            	System.out.print("\nInvalid selection.\n");
+                            	break;
                         }
                     }
                 ////////////////////////////// ADMINISTRATOR ////////////////////////////
@@ -119,11 +126,21 @@ public class Application {
                         String firstName = activeUser.getFirstName();
                         System.out.printf("\nHello again, %s!\n\n", firstName);
                         switch (getSelectionAdministrator()) {
-                            case ADBYFAC: viewFaculty(); break;
-                            case ADBYDEP: viewDepartments(); break;
-                            case ADBYENROLL: viewStudents(); break;
-                            case ADBYGRADE: viewStudentsByGrade(); break;
-                            case ADBYCOURSE: viewStudentsByCourse(); break;
+                            case ADBYFAC:
+                            	viewFaculty();
+                            	break;
+                            case ADBYDEP:
+                            	viewDepartments();
+                            	break;
+                            case ADBYENROLL:
+                            	viewStudents();
+                            	break;
+                            case ADBYGRADE:
+                            	viewStudentsByGrade();
+                            	break;
+                            case ADBYCOURSE:
+                            	viewStudentsByCourse();
+                            	break;
                             case ADCHANGEPWD:
                                 resetUserPassword();
                                 break;
