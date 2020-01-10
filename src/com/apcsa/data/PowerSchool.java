@@ -105,6 +105,34 @@ public class PowerSchool {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Resets a user's password.
+     * 
+     * @param username the user's username
+     */
+    
+    public static boolean resetPassword(String username) {
+    	try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
+
+    		conn.setAutoCommit(false);
+            stmt.setString(1, Utils.getHash(username));
+            stmt.setString(2, username);
+
+            if (stmt.executeUpdate() == 1) {
+                conn.commit();
+                return true;
+            } else {
+                conn.rollback();
+               return false;
+
+            }
+           } catch (SQLException e) {
+               e.printStackTrace();
+               return false;
+           }
+    }
 
     public static int resetTimestamp(String username) {
         try (Connection conn = getConnection()) {
@@ -159,6 +187,30 @@ public class PowerSchool {
         return user;
     }
 
+    public static int resetLastLogin(String username) {
+    	try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_LAST_LOGIN_SQL)){
+    	
+            conn.setAutoCommit(false);
+            stmt.setString(1,"0000-00-00 00:00:00.000");
+            stmt.setString(2, username);
+
+            if (stmt.executeUpdate() == 1) {
+                conn.commit();
+
+                return 1;
+            } else {
+                conn.rollback();
+
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return -1;
+        }
+    }
+    
     /**
      * Returns the teacher account associated with the user.
      *
