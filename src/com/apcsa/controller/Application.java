@@ -249,21 +249,38 @@ public class Application {
     }
 
     private void viewDepartments() {
-        ArrayList<Teacher> teachers = PowerSchool.getTeachers();
+        ArrayList<Teacher> teachers = PowerSchool.getTeachersByDept(getDepartmentSelection());
 
-        System.out.println();
-
-        int i = 1;
-        for (Teacher teacher : teachers) {
-            System.out.println("[" + i++ + "] " + teacher.getDepartmentName());
-        }
-        int decision;
-        System.out.print("\n:::");
-        if (in.hasNextInt()) {
-            decision = in.nextInt();
+        if (teachers.isEmpty()) {
+            System.out.println("\nNo teachers to display.");
         } else {
-            System.out.print("Not a valid selection.");
+            System.out.println();
+
+            int i = 1;
+            for (Teacher teacher : teachers) {
+                System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
+            }
         }
+
+    }
+
+    private int getDepartmentSelection() {
+        int selection = -1;
+        System.out.println("\nChoose a department.");
+
+        while (selection < 1 || selection > 6) {
+            System.out.println("\n[1] Computer Science.");
+            System.out.println("[2] English.");
+            System.out.println("[3] History.");
+            System.out.println("[4] Mathematics.");
+            System.out.println("[5] Physical Education.");
+            System.out.println("[6] Science.");
+            System.out.print("\n::: ");
+
+            selection = Utils.getInt(in, -1);
+        }
+
+        return selection;
     }
 
     private void viewStudents() {
