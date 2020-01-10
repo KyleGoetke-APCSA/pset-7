@@ -28,12 +28,12 @@ public class Application {
     public static final int ADLOGOUT = 7;       // ADMIN - logout
     public static final int TCBYCOURSE = 1;     // TEACHER - view enrollment by course
     public static final int TCNEWASGN = 2;      // TEACHER - add assignment
-    public static final int TCDLTASGN = 3;        // TEACHER - delete assignment
+    public static final int TCDLTASGN = 3;      // TEACHER - delete assignment
     public static final int TCNEWGRD = 4;       // TEACHER - enter grade
     public static final int TCCHANGEPWD = 5;    // TEACHER - change password
     public static final int TCLOGOUT = 6;       // TEACHER - logout
     public static final int STVIEWGRD = 1;      // STUDENT - view course grades
-    public static final int STBYCOURSE = 2;        // STUDENT - view assignment grades by course
+    public static final int STBYCOURSE = 2;     // STUDENT - view assignment grades by course
     public static final int STCHANGEPWD = 3;    // STUDENT - change password
     public static final int STLOGOUT = 4;       // STUDENT - logout
 
