@@ -47,11 +47,11 @@ public class Student extends User {
     }
 
     public int getClassRank() {
-		return classRank;
-	}
+        return classRank;
+    }
 
     public double getGpa() {
-		return gpa;
-	}
+        return gpa;
+    }
 
 }
