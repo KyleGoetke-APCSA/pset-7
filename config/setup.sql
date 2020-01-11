@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS administrators (
 );
 
 INSERT INTO administrators (first_name, last_name, job_title, user_id) VALUES ("Colleen", "Gialanella", "Principal", 2);
-INSERT INTO administrators (first_name, last_name, job_title, user_id) VALUES ("Paul", "DeFrancesco", "Supervisor", 3);
+INSERT INTO administrators (first_name, last_name, job_title, user_id) VALUES ("Paul", "defrancesco", "Supervisor", 3);
 
 DROP TABLE IF EXISTS teachers;
 CREATE TABLE IF NOT EXISTS teachers (
