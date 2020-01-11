@@ -136,8 +136,13 @@ public class Application {
                             case ADCHANGEPWD:
                                 resetUserPassword();
                                 break;
-                            case ADLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
-                            default: System.out.print("\nInvalid selection.\n"); break;
+                            case ADLOGOUT:
+                                validLogin = logoutConfirm();
+                                in.nextLine();
+                            break;
+                            default:
+                                System.out.print("\nInvalid selection.\n");
+                                break;
                         }
                     }
                 ////////////////////////////// TEACHER ////////////////////////////
@@ -147,14 +152,25 @@ public class Application {
                         String firstName = activeUser.getFirstName();
                         System.out.printf("\nHello again, %s!\n\n", firstName);
                         switch (getSelectionTeacher()) {
-                            case TCBYCOURSE: System.out.print("\nview enrollment by course\n"); break;
-                            case TCNEWASGN: System.out.print("\nadd assignment\n"); break;
-                            case TCDLTASGN: System.out.print("\ndelete assignment\n"); break;
-                            case TCNEWGRD: System.out.print("\nenter grade\n"); break;
+                            case TCBYCOURSE:
+                                System.out.print("\nview enrollment by course\n");
+                                break;
+                            case TCNEWASGN:
+                                System.out.print("\nadd assignment\n");
+                                break;
+                            case TCDLTASGN:
+                                System.out.print("\ndelete assignment\n");
+                                break;
+                            case TCNEWGRD:
+                                System.out.print("\nenter grade\n");
+                                break;
                             case TCCHANGEPWD:
                                 resetUserPassword();
                                 break;
-                            case TCLOGOUT: validLogin = logoutConfirm(); in.nextLine(); break;
+                            case TCLOGOUT:
+                                validLogin = logoutConfirm();
+                                in.nextLine();
+                                break;
                             default: System.out.print("\nInvalid selection.\n"); break;
                         }
                     }
@@ -175,7 +191,8 @@ public class Application {
                                 resetUserPassword();
                                 break;
                             case STLOGOUT:
-                                validLogin = logoutConfirm(); in.nextLine();
+                                validLogin = logoutConfirm();
+                                in.nextLine();
                                 break;
                             default:
                                 System.out.print("\nInvalid selection.\n");
