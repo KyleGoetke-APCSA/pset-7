@@ -117,6 +117,27 @@ public class QueryUtils {
         "WHERE course_grades.student_id = ? AND course_grades.course_id = courses.course_id" +
         "ORDER BY course_name";
 
+    public static final String GET_STUDENT_GRADE =
+        "SELECT grade FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String GET_STUDENT_ID_FROM_COURSE_ID =
+        "SELECT student_id FROM course_grades " +
+        "WHERE course_id = ?";
+
+    public static final String GET_COURSES =
+        "SELECT course_no FROM courses " +
+        "WHERE department_id = ?";
+
+    public static final String GET_COURSE_ID =
+        "SELECT course_id FROM courses " +
+        "WHERE course_no = ?";
+
+    public static final String GET_STUDENTS_BY_STUDENT_ID =
+        "SELECT first_name, last_name, gpa FROM students " +
+        "WHERE student_id = ?";
+
     public static final String GET_STUDENT_COURSES_SQL =
         "SELECT courses.title, grade, courses.course_id, courses.course_no FROM course_grades " +
         "INNER JOIN courses ON course_grades.course_id = courses.course_id " +
