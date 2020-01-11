@@ -246,7 +246,7 @@ public class Application {
         String currentPassword = in.next();
         System.out.print("Enter a new password: ");
         String newPassword = in.next();
-        if(activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
+        if (activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
             activeUser.setPassword(newPassword);
             String auth = activeUser.getPassword();
             try (Connection conn = PowerSchool.getConnection()){
@@ -255,7 +255,7 @@ public class Application {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             System.out.println("\nInvalid current password.");
         }
     }
