@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 INSERT INTO users (account_type, username, auth, last_login) VALUES ("root", "root", "b4b8daf4b8ea9d39568719e1e320076f", "0000-00-00 00:00:00.000");
 INSERT INTO users (account_type, username, auth, last_login) VALUES ("administrator", "cgialanella", "f40a411b75ccdabe32fa77799b505ed2", "0000-00-00 00:00:00.000");
-INSERT INTO users (account_type, username, auth, last_login) VALUES ("administrator", "pdefrancesco", "db72bc4ee8223c105c3181f3a1d297ca", "0000-00-00 00:00:00.000");
+INSERT INTO users (account_type, username, auth, last_login) VALUES ("administrator", "pdefrancesco", "064dac11c6ad81f67b568646a999f1c5", "0000-00-00 00:00:00.000");
 INSERT INTO users (account_type, username, auth, last_login) VALUES ("teacher", "rwilson", "30cceb48c348719f0c2f483a54151b27", "0000-00-00 00:00:00.000");
 INSERT INTO users (account_type, username, auth, last_login) VALUES ("teacher", "mcohen", "fdd80a523b36a74124c3baaa399eeebd", "0000-00-00 00:00:00.000");
 INSERT INTO users (account_type, username, auth, last_login) VALUES ("teacher", "psavage", "e73889caa87de7d0e683310f8027db57", "0000-00-00 00:00:00.000");
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS administrators (
 );
 
 INSERT INTO administrators (first_name, last_name, job_title, user_id) VALUES ("Colleen", "Gialanella", "Principal", 2);
-INSERT INTO administrators (first_name, last_name, job_title, user_id) VALUES ("Paul", "defrancesco", "Supervisor", 3);
+INSERT INTO administrators (first_name, last_name, job_title, user_id) VALUES ("Paul", "DeFrancesco", "Supervisor", 3);
 
 DROP TABLE IF EXISTS teachers;
 CREATE TABLE IF NOT EXISTS teachers (
