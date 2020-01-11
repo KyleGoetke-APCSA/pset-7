@@ -156,7 +156,7 @@ public class Application {
                                 enrollmentByCourse();
                                 break;
                             case TCNEWASGN:
-                                System.out.print("\nadd assignment\n");
+                                addAssignment();
                                 break;
                             case TCDLTASGN:
                                 System.out.print("\ndelete assignment\n");
@@ -449,6 +449,94 @@ public class Application {
 
         return selection + 8;   // +8 because you want a value between 9 and 12
     }
+
+    public void addAssignment() {
+        System.out.println("\nChoose a course.\n");
+        int departmentId = ((Teacher) activeUser).getDepartmentId();
+        ArrayList<String> courses = PowerSchool.getCoursesFromDepartment(departmentId);
+        for(int i = 0; i <= courses.size()-1; i++) {
+            System.out.println("[" + (i + 1) + "] " + courses.get(i));
+        }
+        System.out.print("\n::: ");
+        int courseSelection = in.nextInt();
+        while(courseSelection > courses.size() || courseSelection < 1) {
+            System.out.println("\nInvalid selection.");
+            System.out.println("\nChoose a course.\n");
+            for(int i = 0; i <= courses.size()-1; i++) {
+                System.out.println("[" + (i + 1) + "] " + courses.get(i));
+            }
+            System.out.print("\n::: ");
+            courseSelection = in.nextInt();
+        }
+
+        String courseNo = courses.get(courseSelection-1);
+        int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
+
+        printMarkingPeriods();
+        int markingPeriod = in.nextInt();
+
+        while(markingPeriod > 6 || markingPeriod < 1) {
+            System.out.println("\nInvalid selection.");
+            printMarkingPeriods();
+            markingPeriod = in.nextInt();
+        }
+
+        int isMidterm = 0;
+        int isFinal = 0;
+        if (markingPeriod == 5) {
+            isMidterm = 1;
+        } else if (markingPeriod == 6) {
+            isFinal = 1;
+        }
+
+        in.nextLine();
+        System.out.print("\nAssignment Title: ");
+        String title = in.nextLine();
+
+        System.out.print("\nPoint Value: ");
+        int pointValue = in.nextInt();
+
+        while (pointValue > 100 || pointValue < 1) {
+            System.out.println("\nPoint values must be between 1 and 100.");
+            System.out.print("\nPoint Value: ");
+            pointValue = in.nextInt();
+        }
+
+        int assignmentId = 0;
+        in.nextLine();
+        String wantTo = "you want to create this assignment?";
+        System.out.print("\nAre you sure you want to create this assignment? (y/n) ");
+        String yesNo = in.nextLine();
+        yesNo = yesNo.toLowerCase();
+        int checked = checkYesNo(yesNo, wantTo);
+
+        if (checked == -1) {
+            System.out.println("");
+        } else if (checked == 1) {
+            int rows = PowerSchool.assignmentRows();
+            if (rows == 0) {
+                assignmentId = 1;
+            } else {
+                ArrayList<String> assignmentIds = PowerSchool.getAssignmentIds();
+                String lastAssignmentId = assignmentIds.get(assignmentIds.size() - 1);
+                assignmentId = Integer.parseInt(lastAssignmentId) + 1;
+            }
+            PowerSchool.addAssignment(courseId, assignmentId, markingPeriod, isMidterm, isFinal, title, pointValue);
+            System.out.println("\nSuccessfully created assignment.");
+        }
+    }
+
+    public static void printMarkingPeriods() {
+        System.out.println("\nChoose a marking period or exam status.\n");
+        System.out.println("[1] MP1 assignment.");
+        System.out.println("[2] MP2 assignment.");
+        System.out.println("[3] MP3 assignment.");
+        System.out.println("[4] MP4 assignment.");
+        System.out.println("[5] Midterm exam.");
+        System.out.println("[6] Final exam.");
+        System.out.print("\n::: ");
+    }
+
     public int getSelectionRoot() {
         int rootDecision;
         System.out.println("[1] Reset user password.");
@@ -485,6 +573,27 @@ public class Application {
             in.next();
             return 10;
         }
+    }
+
+    private int checkYesNo(String yesNo, String wantTo) {
+        if (!yesNo.equals("y") && !yesNo.equals("n")) {
+            while(!yesNo.equals("y") && !yesNo.equals("n")) {
+                System.out.println("\nInvalid selection.\n");
+                System.out.print("\nAre you sure " + wantTo +" (y/n) ");
+                yesNo = in.nextLine();
+                yesNo = yesNo.toLowerCase();
+            }
+            if ((yesNo.equals("n"))) {
+                return -1;
+            } else if (yesNo.equals("y")) {
+                return 1;
+            }
+        } else if (yesNo.equals("n")) {
+            return -1;
+        } else if (yesNo.equals("y")) {
+            return 1;
+        }
+        return 0;
     }
 
     public int getSelectionTeacher() {
