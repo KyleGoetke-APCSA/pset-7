@@ -249,7 +249,7 @@ public class Application {
         if (activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
             activeUser.setPassword(newPassword);
             String auth = activeUser.getPassword();
-            try (Connection conn = PowerSchool.getConnection()){
+            try (Connection conn = PowerSchool.getConnection()) {
                 PowerSchool.updateAuth(conn, activeUser.getUsername(), auth);
                 System.out.println("\nYour password has been changed to " + newPassword);
             } catch (SQLException e) {
