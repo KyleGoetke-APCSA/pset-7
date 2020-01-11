@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import com.apcsa.controller.Application;
 import com.apcsa.controller.Utils;
@@ -350,6 +351,25 @@ public class PowerSchool {
          return courses;
      }
 
+     public static ArrayList<String> getCoursesFromDepartment(int departmentId) {
+         ArrayList<String> courses = new ArrayList<String>();
+          try (Connection conn = getConnection();
+                  PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_COURSES)) {
+                  stmt.setInt(1, departmentId);
+
+                  try (ResultSet rs = stmt.executeQuery()) {
+                      while (rs.next()) {
+                          String result = rs.getString("course_no");
+                        courses.add(result);
+                      }
+                  }
+              return courses;
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+          return courses;
+      }
+
      public static int updateAuth(Connection conn, String username, String auth) {
          try (PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_AUTH_SQL)) {
 
@@ -537,5 +557,77 @@ public class PowerSchool {
            }
 
            return "e";
+    }
+
+    public static ArrayList<String> getStudentId(String courseId) {
+        ArrayList<String> studentIds = new ArrayList<String>();
+        try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENT_ID_FROM_COURSE_ID)) {
+
+                stmt.setString(1, courseId);
+                 try (ResultSet rs = stmt.executeQuery()) {
+                     while (rs.next()) {
+                         studentIds.add(rs.getString("student_id"));
+                     }
+                 }
+             return studentIds;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         return studentIds;
+    }
+
+    public static ArrayList<String> getStudentsByStudentId(String studentIds) {
+        ArrayList<String> students = new ArrayList<String>();
+        try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_STUDENT_ID)) {
+
+                stmt.setString(1,  studentIds);
+                 try (ResultSet rs = stmt.executeQuery()) {
+                     while (rs.next()) {
+                         students.add(rs.getString("first_name"));
+                         students.add(rs.getString("last_name"));
+                         students.add(rs.getString("gpa"));
+                     }
+                 }
+             return students;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         return students;
+    }
+
+    public static String getStudentGrade(String courseId, String studentId) {
+        try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENT_GRADE)) {
+
+                stmt.setString(1,  courseId);
+                stmt.setString(2,  studentId);
+                 try (ResultSet rs = stmt.executeQuery()) {
+                     while (rs.next()) {
+                         return rs.getString("grade");
+                     }
+                 }
+             return "no";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         return "no";
+    }
+
+    public static String getCourseId(String courseNo) {
+        try (Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_COURSE_ID)) {
+                 stmt.setString(1,  courseNo);
+                 try (ResultSet rs = stmt.executeQuery()) {
+                     while (rs.next()) {
+                         return rs.getString("course_id");
+                     }
+                 }
+             return "no";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         return "no";
     }
 }
