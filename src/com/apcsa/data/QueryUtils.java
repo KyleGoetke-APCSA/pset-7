@@ -83,12 +83,9 @@ public class QueryUtils {
         "ORDER BY last_name, first_name";
 
     public static final String GET_STUDENTS_BY_GRADE_SQL =
-        "SELECT * FROM " +
-            "students " +
-        "WHERE "+
-            "grade_level = ?" +
-        "ORDER BY " +
-            "last_name, first_name";
+        "SELECT * FROM students " +
+        "WHERE grade_level = ?" +
+        "ORDER BY last_name, first_name";
 
     public static final String GET_STUDENTS_BY_COURSE_SQL =
         "SELECT * FROM students, courses, course_grades " +

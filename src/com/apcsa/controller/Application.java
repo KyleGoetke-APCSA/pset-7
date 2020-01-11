@@ -577,7 +577,7 @@ public class Application {
 
     private int checkYesNo(String yesNo, String wantTo) {
         if (!yesNo.equals("y") && !yesNo.equals("n")) {
-            while(!yesNo.equals("y") && !yesNo.equals("n")) {
+            while (!yesNo.equals("y") && !yesNo.equals("n")) {
                 System.out.println("\nInvalid selection.\n");
                 System.out.print("\nAre you sure " + wantTo +" (y/n) ");
                 yesNo = in.nextLine();
@@ -642,7 +642,7 @@ public class Application {
         System.out.print("\n::: ");
         int courseSelection = in.nextInt();
         if (courseSelection < 1 || courseSelection > courses.size()) {
-            while(courseSelection < 1 || courseSelection > courses.size()) {
+            while (courseSelection < 1 || courseSelection > courses.size()) {
                 System.out.println("\nInvalid selection.");
                 System.out.println("\nChoose a course.\n");
                 for (int i = 0; i <= courses.size()-1; i++) {
@@ -653,7 +653,7 @@ public class Application {
             }
         }
         String courseNo = courses.get(courseSelection-1);
-        String courseId = PowerSchool.getCourseId(courseNo);
+        String courseId = String.valueOf(PowerSchool.getCourseId(courseNo));
         ArrayList<String> studentIds = PowerSchool.getStudentId(courseId);
         ArrayList<String> students = new ArrayList<String>();
         for (int i = 0; i < studentIds.size(); i++) {
@@ -695,7 +695,7 @@ public class Application {
         return activeUser.getLastLogin().equals("0000-00-00 00:00:00.000");
     }
 
-    /////// MAIN METHOD ///////////////////////////////////////////////////////////////////
+    //////// MAIN METHOD //////////////////////////////////////////////////////////////////
 
     /*
      * Starts the PowerSchool application.
