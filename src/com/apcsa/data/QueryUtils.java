@@ -138,6 +138,9 @@ public class QueryUtils {
         "SELECT first_name, last_name, gpa FROM students " +
         "WHERE student_id = ?";
 
+    public static final String GET_ASSIGNMENT_IDS =
+        "SELECT assignment_id FROM assignments ";
+
     public static final String GET_STUDENT_COURSES_SQL =
         "SELECT courses.title, grade, courses.course_id, courses.course_no FROM course_grades " +
         "INNER JOIN courses ON course_grades.course_id = courses.course_id " +
@@ -149,4 +152,15 @@ public class QueryUtils {
         "INNER JOIN courses ON course_grades.course_id = courses.course_id " +
         "INNER JOIN students ON students.student_id = course_grades.student_id " +
         "WHERE students.student_id = ?";
+
+    public static final String GET_COURSE_ID_FROM_DEPARTMENT_ID =
+        "SELECT course_id FROM courses " +
+        "WHERE course_no = ?";
+
+    public static final String ADD_ASSIGNMENT =
+        "INSERT INTO assignments " +
+        "VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+    public static final String PREVIOUS_ASSIGNMENT_ID =
+        "SELECT count(*) FROM assignments ";
 }
