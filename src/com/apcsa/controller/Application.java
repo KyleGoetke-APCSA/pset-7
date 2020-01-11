@@ -153,7 +153,7 @@ public class Application {
                         System.out.printf("\nHello again, %s!\n\n", firstName);
                         switch (getSelectionTeacher()) {
                             case TCBYCOURSE:
-                                System.out.print("\nview enrollment by course\n");
+                                enrollmentByCourse();
                                 break;
                             case TCNEWASGN:
                                 System.out.print("\nadd assignment\n");
