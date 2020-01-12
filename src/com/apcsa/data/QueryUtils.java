@@ -124,8 +124,9 @@ public class QueryUtils {
         "WHERE course_id = ?";
 
     public static final String GET_COURSES =
-        "SELECT course_no FROM courses " +
-        "WHERE department_id = ?";
+        "SELECT * FROM courses, teachers " +
+        "WHERE teachers.department_id =? AND teachers.department_id = courses.department_id "+
+        "ORDER BY courses.course_id";
 
     public static final String GET_COURSE_ID =
         "SELECT course_id FROM courses " +
@@ -160,4 +161,165 @@ public class QueryUtils {
 
     public static final String PREVIOUS_ASSIGNMENT_ID =
         "SELECT count(*) FROM assignments ";
+
+    public static final String DELETE_ASSIGNMENT =
+        "DELETE FROM assignments " +
+        "WHERE course_id = ?" +
+        "AND marking_period = ?" +
+        "AND title = ?";
+
+    public static final String GET_ASSIGNMENTS =
+        "SELECT * FROM assignments " +
+        "WHERE course_id = ? AND marking_period = ?";
+
+    public static final String GET_POINT_VALUES =
+        "SELECT * FROM assignments " +
+        "WHERE course_id = ? AND marking_period = ?";
+
+    public static final String GET_POINT_VALUE =
+        "SELECT point_value FROM assignments " +
+        "WHERE title = ?";
+
+    public static final String GET_COURSE_ID_FROM_COURSE_NO =
+        "SELECT course_id FROM courses " +
+        "WHERE course_no = ?";
+
+    public static final String GET_STUDENTS_FIRST_NAMES =
+        "SELECT first_name FROM students " +
+        "WHERE student_id = ?";
+
+    public static final String GET_STUDENTS_LAST_NAMES =
+        "SELECT last_name FROM students " +
+        "WHERE student_id = ?";
+
+    public static final String ROWS_IN_ASSIGNMENT_GRADES =
+        "SELECT count(*) FROM assignment_grades ";
+
+    public static final String GET_ASSIGNMENT_ID_FROM_TITLE_PLUS =
+        "SELECT assignment_id FROM assignments " +
+        "WHERE title = ?" +
+        "AND course_id = ?" +
+        "AND marking_period = ?";
+
+    public static final String PREVIOUS_GRADE =
+        "SELECT points_earned FROM assignment_grades " +
+        "WHERE course_id = ?" +
+        "AND assignment_id = ?" +
+        "AND student_id = ?";
+
+    public static final String FIND_GRADE =
+        "SELECT is_graded FROM assignment_grades " +
+        "WHERE course_id = ? " +
+        "AND assignment_id = ? " +
+        "AND student_id = ?";
+
+    public static final String ADD_ASSIGNMENT_GRADE =
+        "INSERT INTO assignment_grades " +
+        "VALUES(?, ?, ?, ?, ?, ?)";
+
+    public static final String UPDATE_ASSIGNMENT_GRADE =
+        "UPDATE assignment_grades " +
+        "SET points_earned = ? " +
+        "WHERE course_id = ?" +
+        "AND assignment_id = ?" +
+        "AND student_id = ?";
+
+    public static final String GET_ASSIGNMENT_BY_MP =
+        "SELECT assignment_id FROM assignments " +
+        "WHERE marking_period = ?";
+
+    public static final String GET_GRADES =
+        "SELECT points_earned, points_possible FROM assignment_grades " +
+        "WHERE course_id = ? " +
+        "AND assignment_id = ?" +
+        "AND student_id = ? ";
+
+    public static final String UPDATE_COURSE_MP1 =
+        "UPDATE course_grades " +
+        "SET mp1 = ? " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String UPDATE_COURSE_MP2 =
+        "UPDATE course_grades " +
+        "SET mp2 = ? " +
+        "WHERE course_id = ?" +
+        "AND student_id = ?";
+
+    public static final String UPDATE_COURSE_MP3 =
+        "UPDATE course_grades " +
+        "SET mp3 = ? " +
+        "WHERE course_id = ?" +
+        "AND student_id = ?";
+
+    public static final String UPDATE_COURSE_MP4 =
+        "UPDATE course_grades " +
+        "SET mp4 = ? " +
+        "WHERE course_id = ?" +
+        "AND student_id = ?";
+
+    public static final String UPDATE_COURSE_MIDTERM =
+        "UPDATE course_grades " +
+        "SET midterm_exam = ? " +
+        "WHERE course_id = ?" +
+        "AND student_id = ?";
+
+    public static final String UPDATE_COURSE_FINAL =
+        "UPDATE course_grades " +
+        "SET final_exam = ? " +
+        "WHERE course_id = ?" +
+        "AND student_id = ?";
+
+    public static final String GET_MP1_GRADE =
+        "SELECT mp1 FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String GET_MP2_GRADE =
+        "SELECT mp2 FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String GET_MP3_GRADE =
+        "SELECT mp3 FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String GET_MP4_GRADE =
+        "SELECT mp4 FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String GET_MIDTERM_GRADE =
+        "SELECT midterm_exam FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String GET_FINAL_GRADE =
+        "SELECT final_exam FROM course_grades " +
+        "WHERE course_id = ? " +
+        "AND student_id = ?";
+
+    public static final String UPDATE_COURSE_GRADE =
+        "UPDATE course_grades " +
+        "SET grade = ? " +
+        "WHERE course_id = ?" +
+        "AND student_id = ?";
+
+    public static final String GET_ALL_GRADES_FOR_STUDENT =
+        "SELECT grade FROM course_grades " +
+        "WHERE student_id = ?";
+
+    public static final String GET_COURSE_ID_BY_STUDENT =
+        "SELECT course_id FROM course_grades " +
+        "WHERE student_id = ?";
+
+    public static final String GET_CREDIT_HOURS =
+        "SELECT credit_hours FROM courses " +
+        "WHERE course_id = ?";
+
+    public static final String UPDATE_GPA =
+        "UPDATE students " +
+        "SET gpa = ?" +
+        "WHERE student_id = ?";
 }

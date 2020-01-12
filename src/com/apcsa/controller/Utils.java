@@ -2,6 +2,8 @@ package com.apcsa.controller;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -70,6 +72,73 @@ public class Utils {
         } finally {
             in.nextLine();                      // always consume the dangling newline character
         }
+    }
+
+    public static Double getGrade(ArrayList<Double> grades) {
+        int mps = 0;
+        double mpSum = 0;
+        double mpAvg = -1;
+        double mpWeight = -1;
+
+        int exams = 0;
+        double examSum = 0;
+        double examAvg = -1;
+        double examWeight = -1;
+
+        // compute sume of marking period and/or exam grades
+
+        for (int i = 0; i < grades.size(); i++) {
+            if (grades.get(i) != null) {
+                if (i < 2 || (i > 2 && i < 5)) {        // marking period grade
+                    if(grades.get(i)==-1) {
+
+                    } else {
+                        mps++;
+                        mpSum = mpSum + grades.get(i);
+                    }
+                } else {                                // midterm or final exam grade
+                    if(grades.get(i)==-1) {
+
+                    } else {
+                        exams++;
+                        examSum = examSum + grades.get(i);
+                    }
+                }
+            }
+        }
+
+        // compute weights and averages based on entered grades
+
+        if (mps > 0 && exams > 0) {
+            mpAvg = mpSum / mps;
+            examAvg = examSum / exams;
+
+            mpWeight = 0.8;
+            examWeight = 0.2;
+        } else if (mps > 0) {
+            mpAvg = mpSum / mps;
+
+            mpWeight = 1.0;
+            examWeight = 0.0;
+        } else if (exams > 0) {
+            examAvg = examSum / exams;
+
+            mpWeight = 0.0;
+            examWeight = 1.0;
+        } else {
+            return null;
+        }
+        return round(mpAvg * mpWeight + examAvg * examWeight, 2);
+    }
+
+    public static Double round(Double grades, int decimals) {
+        String decimalPlaces = "#.";
+        for(int i = 0; i < decimals; i++) {
+            decimalPlaces += "#";
+        }
+        DecimalFormat df = new DecimalFormat(decimalPlaces);
+        double grade = Double.parseDouble(df.format(grades));
+        return grade;
     }
 
 }
