@@ -231,18 +231,18 @@ public class Application {
     }
 
     private void resetPassword() {
-    	System.out.print("\nUsername: ");
-    	String username = in.next();
-    	if (Utils.confirm(in, "\nAre you sure you want to reset the password for " + username + "?  (y/n) ")) {
+        System.out.print("\nUsername: ");
+        String username = in.next();
+        if (Utils.confirm(in, "\nAre you sure you want to reset the password for " + username + "?  (y/n) ")) {
             if (in != null) {
-            	if (PowerSchool.resetPassword(username)) {
-            		PowerSchool.resetLastLogin(username);
-            		System.out.println("\nSuccessfully reset password for " + username + ".");
-            	} else {
-            		System.out.println("\nPassword reset failed");
-            	}
+                if (PowerSchool.resetPassword(username)) {
+                    PowerSchool.resetLastLogin(username);
+                    System.out.println("\nSuccessfully reset password for " + username + ".");
+                } else {
+                    System.out.println("\nPassword reset failed");
+                }
             }
-    	}
+        }
     }
 
     public void resetUserPassword() {
