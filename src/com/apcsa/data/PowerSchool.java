@@ -317,19 +317,19 @@ public class PowerSchool {
 
      public static ArrayList<Student> getStudentsByCourse(String courseNo) {
          ArrayList<Student> students = new ArrayList<Student>();
-         
+
          try (Connection conn = getConnection();
-        		 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_COURSE_SQL)) {
-        	 stmt.setString(1, courseNo);        
+                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_COURSE_SQL)) {
+             stmt.setString(1, courseNo);
              try (ResultSet rs = stmt.executeQuery()) {
-            	 while(rs.next()) {
-                     students.add(new Student(rs));                 
-            	 }
+                 while(rs.next()) {
+                     students.add(new Student(rs));
+                 }
              }
          } catch (SQLException e) {
              e.printStackTrace();
          }
-         
+
          return students;
      }
 
