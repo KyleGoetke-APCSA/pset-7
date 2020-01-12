@@ -304,7 +304,7 @@ public class PowerSchool {
                  PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_GRADE_SQL)) {
              stmt.setString(1, String.valueOf(grade));
              try (ResultSet rs = stmt.executeQuery()) {
-                 while(rs.next()) {
+                 while (rs.next()) {
                      students.add(new Student(rs));
                  }
              }
@@ -317,19 +317,19 @@ public class PowerSchool {
 
      public static ArrayList<Student> getStudentsByCourse(String courseNo) {
          ArrayList<Student> students = new ArrayList<Student>();
-
+         
          try (Connection conn = getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_COURSE_SQL)) {
-             stmt.setString(1, courseNo);
+        		 PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENTS_BY_COURSE_SQL)) {
+        	 stmt.setString(1, courseNo);        
              try (ResultSet rs = stmt.executeQuery()) {
-                 while(rs.next()) {
-                     students.add(new Student(rs));
-                 }
+            	 while(rs.next()) {
+                     students.add(new Student(rs));                 
+            	 }
              }
          } catch (SQLException e) {
              e.printStackTrace();
          }
-
+         
          return students;
      }
 
@@ -340,7 +340,7 @@ public class PowerSchool {
                  PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_COURSES)) {
              stmt.setString(1, String.valueOf(departmentId));
              try (ResultSet rs = stmt.executeQuery()) {
-                 while(rs.next()) {
+                 while (rs.next()) {
                      courses.add(rs.getString("course_no"));
                  }
              }
@@ -740,7 +740,7 @@ public class PowerSchool {
             stmt.setInt(2, markingPeriod);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                while(rs.next()) {
+                while (rs.next()) {
                    pointValues.add(rs.getString("point_value"));
                 }
             }
@@ -762,7 +762,7 @@ public class PowerSchool {
             stmt.setInt(2, markingPeriod);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                while(rs.next()) {
+                while (rs.next()) {
                    assignments.add(rs.getString("title"));
                 }
             }
@@ -1269,9 +1269,9 @@ public class PowerSchool {
                      try (ResultSet rs = stmt.executeQuery()) {
                          while (rs.next()) {
                              String result = rs.getString("grade");
-                             if(result == null) {
+                             if (result == null) {
                                courseGrades.add(-1.0);
-                             }else {
+                             } else {
                               courseGrades.add(rs.getObject("grade"));
                              }
                          }

@@ -83,9 +83,10 @@ public class Application {
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     // first-time users need to change their passwords from the default provided
-                    System.out.print("\nAs a new user, you must change your password. \n\nEnter your new password: ");
+                    System.out.print("\nAs a new user, you must change your password. \n\nEnter new password: ");
                     String newPassword = in.next();
                     PowerSchool.changePassword(username, newPassword);
+                    System.out.println("\nSuccessfully changed password.");
                 ////////////////////////////// ROOT ////////////////////////////
                 } else if (activeUser.isRoot()) {
                     boolean validLogin = true;
@@ -328,7 +329,7 @@ public class Application {
 
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName());
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getGraduationYear());
             }
         }
     }
@@ -343,7 +344,7 @@ public class Application {
 
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + student.getClassRank());
+                System.out.println(i++ + ". " + student.getName() + " / #" + student.getClassRank());
             }
         }
     }
@@ -352,7 +353,7 @@ public class Application {
         String courseNo = "";
         try {
         courseNo = getCourseSelection();
-        }catch(SQLException e) {
+        } catch(SQLException e) {
 
         }
         ArrayList<Student> students = PowerSchool.getStudentsByCourse(courseNo);

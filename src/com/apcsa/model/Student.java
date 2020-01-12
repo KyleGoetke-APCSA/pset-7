@@ -173,4 +173,8 @@ public class Student extends User {
         }
     }
 
+	public int getGraduationYear() {
+		return graduationYear;
+	}
+
 }

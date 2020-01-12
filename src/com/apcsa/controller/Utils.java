@@ -90,14 +90,14 @@ public class Utils {
         for (int i = 0; i < grades.size(); i++) {
             if (grades.get(i) != null) {
                 if (i < 2 || (i > 2 && i < 5)) {        // marking period grade
-                    if(grades.get(i)==-1) {
+                    if (grades.get(i)==-1) {
 
                     } else {
                         mps++;
                         mpSum = mpSum + grades.get(i);
                     }
                 } else {                                // midterm or final exam grade
-                    if(grades.get(i)==-1) {
+                    if (grades.get(i)==-1) {
 
                     } else {
                         exams++;
