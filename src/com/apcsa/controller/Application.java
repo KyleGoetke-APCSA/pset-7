@@ -7,6 +7,7 @@ import com.apcsa.data.PowerSchool;
 import com.apcsa.model.Student;
 import com.apcsa.model.Teacher;
 import com.apcsa.model.User;
+import java.sql.Connection;
 
 public class Application {
 
@@ -245,16 +246,22 @@ public class Application {
 
     public void resetUserPassword() {
         System.out.print("\nEnter current password: ");
-        String oldPassword = in.next();
-        System.out.print("Enter new password: ");
+		String currentPassword = in.next();
+		System.out.print("Enter a new password: ");
         String newPassword = in.next();
-        if (Utils.getHash(oldPassword).equals(activeUser.getPassword())) {
-            PowerSchool.changePassword(activeUser.getUsername(), Utils.getHash(newPassword));
-            System.out.println("\nSuccessfully changed password.");
-        } else if (!(oldPassword.equals(activeUser.getPassword()))) {
-            System.out.println("\nInvalid current password.");
+        if (activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
+        	activeUser.setPassword(newPassword);
+            String auth = activeUser.getPassword();
+    		try (Connection conn = PowerSchool.getConnection()){
+    			PowerSchool.updateAuth(conn, activeUser.getUsername(), auth);
+    			System.out.println("\nSuccessfully changed password.");
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+        } else {
+        	System.out.println("\nInvalid current password.");
         }
-    }
+	}
 
     public boolean logoutConfirm() {
         System.out.print("\nAre you sure you want to logout? (y/n) ");
