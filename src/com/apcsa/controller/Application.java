@@ -436,10 +436,10 @@ public class Application {
     public void enterGrade() {
         boolean hasAssignment = true;
            System.out.println("\nChoose a course.\n");
-           int departmentId = ((Teacher) activeUser).getDepartmentId(); //department id of the teacher
-           ArrayList<String> courses = PowerSchool.getCourses(departmentId); //all courses
+           int departmentId = ((Teacher) activeUser).getDepartmentId();
+           ArrayList<String> courses = PowerSchool.getCourses(departmentId);
            for (int i = 0; i <= courses.size()-1; i++) {
-               System.out.println("[" + (i + 1) + "] " + courses.get(i)); //printing out courses
+               System.out.println("[" + (i + 1) + "] " + courses.get(i));
            }
            System.out.print("\n::: ");
            int courseSelection = in.nextInt();
@@ -449,16 +449,16 @@ public class Application {
                    System.out.println("\nInvalid selection.");
                    System.out.println("\nChoose a course.\n");
                    for (int i = 0; i <= courses.size()-1; i++) {
-                          System.out.println("[" + (i + 1) + "] " + courses.get(i)); //printing out courses
+                          System.out.println("[" + (i + 1) + "] " + courses.get(i));
                       }
                 System.out.print("\n::: ");
                 courseSelection = in.nextInt();
                }
            }
         String courseNo = courses.get(courseSelection-1);
-           int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo); //courseId
+           int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
            printMarkingPeriods();
-           int markingPeriod = in.nextInt();//Selected Marking Period
+           int markingPeriod = in.nextInt();
            if (markingPeriod < 1 || markingPeriod > 6) {
                while (markingPeriod < 1 || markingPeriod > 6) {
                    System.out.println("\nInvalid selection.");
@@ -467,7 +467,7 @@ public class Application {
                }
            }
 
-           ArrayList<String> assignments = PowerSchool.getAssignments(courseId, markingPeriod);//get courses by courseId and markingPeriod
+           ArrayList<String> assignments = PowerSchool.getAssignments(courseId, markingPeriod);
            if (assignments.isEmpty()) {
                System.out.println("\nThere are no assignments here.");
                hasAssignment = false;
@@ -490,13 +490,13 @@ public class Application {
                     assignmentSelection = in.nextInt();
                 }
             }
-            String title = assignments.get(assignmentSelection-1); //title of the assignment
+            String title = assignments.get(assignmentSelection-1);
 
-            String StringCourseId = PowerSchool.getCourseIdFromCourseNoTwo(courseNo);//courseId
-            ArrayList<String> studentIds = PowerSchool.getStudentId(StringCourseId);//getting studentIds enrolled in a course with courseId
+            String StringCourseId = PowerSchool.getCourseIdFromCourseNoTwo(courseNo);
+            ArrayList<String> studentIds = PowerSchool.getStudentId(StringCourseId);
             ArrayList<String> students = new ArrayList<String>();
             for (int i = 0; i < studentIds.size(); i++) {
-                students.addAll(PowerSchool.getStudentsByStudentId(studentIds.get(i))); //getting students firstname, lastname, and gpa
+                students.addAll(PowerSchool.getStudentsByStudentId(studentIds.get(i)));
             }
             ArrayList<String> studentsFirstNames = new ArrayList<String>();
             for (int i = 0; i < studentIds.size(); i++) {
