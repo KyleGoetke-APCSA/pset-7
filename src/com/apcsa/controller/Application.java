@@ -241,25 +241,6 @@ public class Application {
         }
     }
 
-    private void changePassword() {
-        System.out.print("\nEnter current password: ");
-        String currentPassword = in.next();
-        System.out.print("Enter a new password: ");
-        String newPassword = in.next();
-        if (activeUser.getPassword().equals(Utils.getHash(currentPassword))) {
-            activeUser.setPassword(newPassword);
-            String auth = activeUser.getPassword();
-            try (Connection conn = PowerSchool.getConnection()) {
-                PowerSchool.updateAuth(conn, activeUser.getUsername(), auth);
-                System.out.println("\nYour password has been changed to " + newPassword);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("\nInvalid current password.");
-        }
-    }
-
     public void resetUserPassword() {
         System.out.print("\nEnter current password: ");
         String oldPassword = in.next();
