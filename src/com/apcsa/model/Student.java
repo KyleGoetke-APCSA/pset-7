@@ -73,7 +73,12 @@ public class Student extends User {
             stmt.setInt(1, (int) this.getStudentId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    System.out.println(rs.getString("title") + " / " + rs.getInt("grade"));
+                    String gradeInt;
+                    gradeInt = String.valueOf((double) rs.getInt("grade"));
+                    if (gradeInt.equals("0.0")) {
+                        gradeInt = "--";
+                    }
+                    System.out.println(rs.getString("title") + " / " + gradeInt);
                 }
             }
         } catch (SQLException e) {
@@ -173,8 +178,8 @@ public class Student extends User {
         }
     }
 
-	public int getGraduationYear() {
-		return graduationYear;
-	}
+    public int getGraduationYear() {
+        return graduationYear;
+    }
 
 }

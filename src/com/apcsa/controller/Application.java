@@ -83,7 +83,7 @@ public class Application {
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     // first-time users need to change their passwords from the default provided
-                    System.out.print("\nAs a new user, you must change your password. \n\nEnter new password: ");
+                    System.out.print("\nEnter new password: ");
                     String newPassword = in.next();
                     PowerSchool.changePassword(username, newPassword);
                     System.out.println("\nSuccessfully changed password.");
@@ -91,7 +91,7 @@ public class Application {
                 } else if (activeUser.isRoot()) {
                     boolean validLogin = true;
                     while (validLogin) {
-                        System.out.println("\nHello again, ROOT!\n");
+                        System.out.println("\nHello, again, ROOT!\n");
                         switch (getSelectionRoot()) {
                             case RTCHANGEPWD:
                                 resetPassword();
@@ -121,7 +121,7 @@ public class Application {
                     boolean validLogin = true;
                     while (validLogin) {
                         String firstName = activeUser.getFirstName();
-                        System.out.printf("\nHello again, %s!\n\n", firstName);
+                        System.out.printf("\nHello, again, %s!\n\n", firstName);
                         switch (getSelectionAdministrator()) {
                             case ADBYFAC:
                                 viewFaculty();
@@ -155,7 +155,7 @@ public class Application {
                     boolean validLogin = true;
                     while (validLogin) {
                         String firstName = activeUser.getFirstName();
-                        System.out.printf("\nHello again, %s!\n\n", firstName);
+                        System.out.printf("\nHello, again, %s!\n\n", firstName);
                         switch (getSelectionTeacher()) {
                             case TCBYCOURSE:
                                 enrollmentByCourse();
@@ -184,7 +184,7 @@ public class Application {
                     boolean validLogin = true;
                     while (validLogin) {
                         String firstName = activeUser.getFirstName();
-                        System.out.printf("\nHello again, %s!\n\n", firstName);
+                        System.out.printf("\nHello, again, %s!\n\n", firstName);
                         switch (getSelectionStudent()) {
                             case STVIEWGRD:
                                 ((Student) activeUser).viewCourseGrades();
@@ -472,7 +472,7 @@ public class Application {
 
            ArrayList<String> assignments = PowerSchool.getAssignments(courseId, markingPeriod);//get courses by courseId and markingPeriod
            if (assignments.isEmpty()) {
-               System.out.println("\nThere are no assignments here.\n");
+               System.out.println("\nThere are no assignments here.");
                hasAssignment = false;
         }
         while (hasAssignment) {
@@ -711,7 +711,7 @@ public class Application {
         in.nextLine();
         System.out.print("\nAssignment Title: ");
         String title = in.nextLine();
-        System.out.print("\nPoint Value: ");
+        System.out.print("Point Value: ");
         int pointValue = in.nextInt();
         while (pointValue > 100 || pointValue < 1) {
             System.out.println("\nPoint values must be between 1 and 100.");
@@ -738,7 +738,7 @@ public class Application {
                 assignmentId = Integer.parseInt(lastAssignmentId) + 1;
             }
             PowerSchool.addAssignment(courseId, assignmentId, markingPeriod, isMidterm, isFinal, title, pointValue);
-            System.out.println("\nSuccessfully created assignment.\n");
+            System.out.println("\nSuccessfully created assignment.");
         }
     }
 
