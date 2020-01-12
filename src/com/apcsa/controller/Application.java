@@ -2,16 +2,11 @@ package com.apcsa.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import com.apcsa.data.PowerSchool;
-import com.apcsa.data.QueryUtils;
 import com.apcsa.model.Student;
 import com.apcsa.model.Teacher;
 import com.apcsa.model.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class Application {
 
