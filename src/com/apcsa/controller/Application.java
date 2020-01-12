@@ -176,7 +176,9 @@ public class Application {
                                 validLogin = logoutConfirm();
                                 in.nextLine();
                                 break;
-                            default: System.out.print("\nInvalid selection.\n"); break;
+                            default:
+                            	System.out.print("\nInvalid selection.\n");
+                            	break;
                         }
                     }
                 ////////////////////////////// STUDENT ////////////////////////////
